@@ -3,413 +3,820 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>DIA GKM Dashboard – D.NILO (Semua Pivot Rapi)</title>
+    <title>DIA GKM Dashboard – D.NILO</title>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg:       #080C14;
-            --bg2:      #0D1420;
-            --surface:  #111827;
-            --surface2: #182235;
-            --border:   rgba(255,255,255,0.07);
-            --border2:  rgba(255,255,255,0.12);
-            --text:     #F0F4FF;
-            --text2:    #8A9BBE;
-            --text3:    #4A5A78;
-            --accent:   #3B82F6;
-            --accent2:  #60A5FA;
-            --green:    #10B981;
-            --yellow:   #F59E0B;
-            --orange:   #F97316;
-            --red:      #EF4444;
-            --purple:   #A78BFA;
-            --teal:     #14B8A6;
-            --r0: #34D399;   --r0bg: rgba(52,211,153,0.2);
-            --r1: #FCD34D;   --r1bg: rgba(252,211,77,0.2);
-            --r2: #FB923C;   --r2bg: rgba(251,146,60,0.2);
-            --r3: #F87171;   --r3bg: rgba(248,113,113,0.2);
-            --r4: #F87171;   --r4bg: rgba(248,113,113,0.25);
-            --r5: #FCA5A5;   --r5bg: rgba(252,165,165,0.25);
-            --r6: #FCA5A5;   --r6bg: rgba(252,165,165,0.35);
+            --bg:       #060A12;
+            --bg2:      #0A1020;
+            --surface:  #0E1826;
+            --surface2: #14223A;
+            --surface3: #1A2E4A;
+            --border:   rgba(100,160,255,0.08);
+            --border2:  rgba(100,160,255,0.16);
+            --border3:  rgba(100,160,255,0.28);
+            --text:     #E8F0FF;
+            --text2:    #7A9AC8;
+            --text3:    #3A5070;
+            --accent:   #2D7EFF;
+            --accent2:  #5B9FFF;
+            --accent3:  #A8C8FF;
+            --green:    #00D68F;
+            --yellow:   #FFB800;
+            --orange:   #FF6B35;
+            --red:      #FF4560;
+            --purple:   #9B5DE5;
+            --teal:     #00C9C8;
+            --glow-blue: rgba(45,126,255,0.15);
+            --glow-green: rgba(0,214,143,0.12);
+            --r0: #00D68F; --r0bg: rgba(0,214,143,0.12);
+            --r1: #FFB800; --r1bg: rgba(255,184,0,0.12);
+            --r2: #FF6B35; --r2bg: rgba(255,107,53,0.12);
+            --r3: #FF4560; --r3bg: rgba(255,69,96,0.12);
+            --r4: #FF2D55; --r4bg: rgba(255,45,85,0.15);
+            --r5: #FF6680; --r5bg: rgba(255,102,128,0.15);
+            --r6: #FF99AA; --r6bg: rgba(255,153,170,0.18);
         }
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
         body {
             background: var(--bg);
             color: var(--text);
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Sora', sans-serif;
             font-size: 13px;
-            line-height: 1.5;
+            line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden;
         }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg2); }
-        ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
 
-        /* ========= HEADER RESPONSIF ========= */
+        /* Grid noise background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(45,126,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(45,126,255,0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--border3); }
+
+        /* ========= HEADER ========= */
         header {
-            background: linear-gradient(180deg, rgba(17,24,39,0.98) 0%, rgba(8,12,20,0.95) 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 0 16px;
+            background: rgba(10,16,32,0.96);
+            border-bottom: 1px solid var(--border2);
+            padding: 0 20px;
             height: auto;
-            min-height: 64px;
+            min-height: 60px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
             position: sticky;
             top: 0;
-            z-index: 200;
-            backdrop-filter: blur(12px);
+            z-index: 300;
+            backdrop-filter: blur(20px) saturate(1.5);
             flex-wrap: wrap;
         }
-        .header-left { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+
+        .header-left { display: flex; align-items: center; gap: 14px; flex-shrink: 0; padding: 10px 0; }
+
         .logo {
-            width: 36px; height: 36px;
-            background: linear-gradient(135deg, #1D4ED8, #3B82F6);
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg, #1054CC, #2D7EFF);
             border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Space Mono', monospace;
-            font-weight: 700; font-size: 12px; color: #fff;
-            box-shadow: 0 0 20px rgba(59,130,246,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700; font-size: 11px; color: #fff;
+            box-shadow: 0 0 0 1px rgba(45,126,255,0.4), 0 4px 16px rgba(45,126,255,0.3);
+            letter-spacing: -0.5px;
+            flex-shrink: 0;
         }
-        .header-title { font-weight: 700; font-size: 14px; letter-spacing: -0.01em; }
-        .header-sub { font-size: 10px; color: var(--text2); font-weight: 400; }
-        .header-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .upload-zone {
+
+        .header-title-group { line-height: 1.2; }
+        .header-title {
+            font-weight: 700; font-size: 14px;
+            letter-spacing: -0.02em;
+            color: var(--text);
+        }
+        .header-sub { font-size: 10px; color: var(--text2); font-weight: 400; letter-spacing: 0.02em; margin-top: 1px; }
+
+        .header-right {
             display: flex; align-items: center; gap: 8px;
+            flex-wrap: wrap;
+            padding: 10px 0;
+        }
+
+        .upload-zone {
+            display: flex; align-items: center; gap: 6px;
             background: var(--surface2);
             border: 1px solid var(--border2);
             border-radius: 10px;
-            padding: 5px 12px;
+            padding: 6px 10px;
+            transition: border-color 0.2s;
         }
-        .upload-zone label { font-size: 11px; font-weight: 500; color: var(--text2); cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .upload-zone:hover { border-color: var(--border3); }
+        .upload-zone label {
+            font-size: 11px; font-weight: 500; color: var(--text2);
+            cursor: pointer; display: flex; align-items: center; gap: 5px;
+        }
         #fileInput { display: none; }
-        #fileLabel { max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        #fileLabel { max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
         .btn-primary {
-            background: var(--accent);
+            background: linear-gradient(135deg, #1054CC, #2D7EFF);
             border: none;
             color: white;
             border-radius: 8px;
-            padding: 5px 12px;
+            padding: 6px 14px;
             font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            font-family: 'Sora', sans-serif;
+            letter-spacing: 0.01em;
         }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(45,126,255,0.4); }
+        .btn-primary:active { transform: translateY(0); }
+
         .pill {
-            background: rgba(59,130,246,0.1);
-            border: 1px solid rgba(59,130,246,0.25);
+            background: rgba(45,126,255,0.08);
+            border: 1px solid rgba(45,126,255,0.2);
             color: var(--accent2);
-            padding: 4px 10px;
+            padding: 5px 12px;
             border-radius: 20px;
             font-size: 10px;
-            font-weight: 500;
+            font-weight: 600;
             white-space: nowrap;
+            letter-spacing: 0.03em;
         }
-        .main { padding: 16px; max-width: 1700px; margin: 0 auto; }
-        
-        /* LEGEND RESPONSIF */
+
+        /* ========= LAYOUT ========= */
+        .main {
+            padding: 20px;
+            max-width: 1800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========= LEGEND STRIP ========= */
         .legend-strip {
             display: flex;
-            flex-direction: column;
             align-items: flex-start;
-            gap: 12px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px 16px;
-            margin-bottom: 20px;
-        }
-        .legend-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); }
-        .legend-items { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-        .legend-item { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--text2); }
-        .legend-pip { width: 8px; height: 8px; border-radius: 2px; }
-        #statsMeta { margin-left: auto; font-size: 10px; color: var(--text3); margin-top: 4px; }
-
-        /* KPI GRID RESPONSIF */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .kpi-card {
+            flex-direction: column;
+            gap: 10px;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 14px;
-            padding: 14px 16px;
-            position: relative;
-            transition: transform 0.2s, border-color 0.2s;
+            padding: 14px 18px;
+            margin-bottom: 20px;
         }
-        .kpi-card:hover { transform: translateY(-2px); border-color: var(--border2); }
-        .kpi-card::after {
+        @media (min-width: 640px) {
+            .legend-strip { flex-direction: row; align-items: center; }
+        }
+        .legend-label {
+            font-size: 9px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.12em;
+            color: var(--text3);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .legend-items { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+        .legend-item {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 10px; color: var(--text2);
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 3px 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+        }
+        .legend-pip { width: 7px; height: 7px; border-radius: 2px; flex-shrink: 0; }
+        #statsMeta {
+            margin-left: auto; font-size: 10px; color: var(--text3);
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+        }
+        #statsMeta strong { color: var(--text2); }
+
+        /* ========= KPI GRID ========= */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        @media (min-width: 480px) {
+            .kpi-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 900px) {
+            .kpi-grid { grid-template-columns: repeat(5, 1fr); }
+        }
+
+        .kpi-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 18px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            cursor: default;
+        }
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--border3);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        .kpi-card::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 2px;
-            border-radius: 14px 14px 0 0;
         }
-        .kpi-card.c-blue::after  { background: linear-gradient(90deg, #1D4ED8, #60A5FA); }
-        .kpi-card.c-green::after { background: linear-gradient(90deg, #059669, #34D399); }
-        .kpi-card.c-yellow::after{ background: linear-gradient(90deg, #D97706, #FDE68A); }
-        .kpi-card.c-orange::after{ background: linear-gradient(90deg, #C2410C, #FB923C); }
-        .kpi-card.c-red::after   { background: linear-gradient(90deg, #B91C1C, #FCA5A5); }
-        .kpi-icon { font-size: 18px; margin-bottom: 6px; display: block; }
-        .kpi-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 4px; }
-        .kpi-val { font-family: 'Space Mono', monospace; font-size: 24px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
-        @media (min-width: 640px) {
-            .kpi-val { font-size: 30px; }
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            top: -20px; right: -20px;
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            opacity: 0.06;
         }
-        .kpi-sub { font-size: 9px; color: var(--text3); margin-top: 4px; }
+        .kpi-card.c-blue::before   { background: linear-gradient(90deg, #1054CC, #5B9FFF); }
+        .kpi-card.c-blue::after    { background: #2D7EFF; }
+        .kpi-card.c-green::before  { background: linear-gradient(90deg, #00A36C, #00D68F); }
+        .kpi-card.c-green::after   { background: #00D68F; }
+        .kpi-card.c-yellow::before { background: linear-gradient(90deg, #CC8800, #FFB800); }
+        .kpi-card.c-yellow::after  { background: #FFB800; }
+        .kpi-card.c-orange::before { background: linear-gradient(90deg, #CC3300, #FF6B35); }
+        .kpi-card.c-orange::after  { background: #FF6B35; }
+        .kpi-card.c-red::before    { background: linear-gradient(90deg, #CC1133, #FF4560); }
+        .kpi-card.c-red::after     { background: #FF4560; }
 
-        /* CARD */
+        .kpi-icon { font-size: 20px; margin-bottom: 10px; display: block; }
+        .kpi-label {
+            font-size: 9px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--text3); margin-bottom: 6px;
+        }
+        .kpi-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 26px; font-weight: 700;
+            line-height: 1.1; letter-spacing: -0.02em;
+            color: var(--text);
+        }
+        @media (min-width: 640px) { .kpi-val { font-size: 32px; } }
+        .kpi-sub { font-size: 9px; color: var(--text3); margin-top: 5px; font-weight: 400; }
+
+        /* ========= CARD ========= */
         .card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 16px;
+            border-radius: 16px;
+            padding: 18px;
             overflow: hidden;
             margin-bottom: 16px;
+            position: relative;
         }
         .card-hdr {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             gap: 10px;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
         @media (min-width: 640px) {
             .card-hdr { flex-direction: row; align-items: center; justify-content: space-between; }
         }
+        .card-hdr-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .card-ttl {
             font-weight: 700;
             font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: flex; align-items: center; gap: 10px;
+            color: var(--text);
+            letter-spacing: -0.01em;
         }
         .card-ttl-icon {
-            width: 28px; height: 28px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 30px; height: 30px;
+            border-radius: 9px;
+            display: flex; align-items: center; justify-content: center;
             font-size: 14px;
             flex-shrink: 0;
         }
-        .card-badge { font-size: 9px; color: var(--text3); background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 2px 8px; white-space: nowrap; }
+        .card-badge {
+            font-size: 9px; color: var(--text3);
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 3px 8px;
+            white-space: nowrap;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.02em;
+        }
 
-        /* TABEL PIVOT */
-        .tbl-wrap { overflow-x: auto; width: 100%; -webkit-overflow-scrolling: touch; }
-        .pivot-tbl { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 600px; }
-        .pivot-tbl th {
+        /* ========= PIVOT TABLE ========= */
+        .tbl-wrap {
+            overflow-x: auto;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 10px;
+        }
+        .pivot-tbl {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 11px;
+            min-width: 580px;
+        }
+        .pivot-tbl thead tr th {
             background: var(--bg2);
             color: var(--text3);
             font-weight: 700;
-            font-size: 10px;
+            font-size: 9px;
             text-transform: uppercase;
-            letter-spacing: 0.06em;
-            padding: 10px 6px;
+            letter-spacing: 0.08em;
+            padding: 10px 8px;
             text-align: center;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--border2);
             white-space: nowrap;
+            position: sticky;
+            top: 0;
         }
+        .pivot-tbl thead tr th:first-child { text-align: left; border-radius: 10px 0 0 0; }
+        .pivot-tbl thead tr th:last-child { border-radius: 0 10px 0 0; }
         .pivot-tbl td {
-            padding: 8px 6px;
+            padding: 8px 8px;
             text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(100,160,255,0.04);
+            font-weight: 600;
+            font-size: 11px;
+        }
+        .pivot-tbl td:first-child { text-align: left; padding-left: 10px; }
+        .pivot-tbl tbody tr:last-child td { border-bottom: none; }
+        .pivot-tbl tbody tr:hover td { background: rgba(45,126,255,0.04); }
+
+        .row-sub td:first-child { padding-left: 22px; }
+        .row-koord td { background: rgba(45,126,255,0.04); }
+        .row-koord td:first-child {
+            font-size: 11px; font-weight: 700;
+            color: var(--text);
+        }
+        .row-grand td {
+            background: var(--bg2);
+            border-top: 1px solid var(--border2);
+            font-weight: 700;
+            color: var(--text);
+        }
+        .range-val {
+            font-family: 'JetBrains Mono', monospace;
             font-weight: 700;
             font-size: 11px;
         }
-        .pivot-tbl td:first-child { text-align: left; padding-left: 8px; }
-        .row-sub td:first-child { padding-left: 16px; }
-        .row-koord td:first-child { font-size: 12px; }
-        .range-val { font-family: 'Space Mono', monospace; font-weight: 800; font-size: 11px; }
 
-        /* FILTER ROW (VERTIKAL DI HP) */
+        /* ========= STATUS PILLS ========= */
+        .status-pill {
+            display: inline-block;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .sp-complete { background: rgba(0,214,143,0.12); color: #00D68F; border: 1px solid rgba(0,214,143,0.2); }
+        .sp-qa       { background: rgba(45,126,255,0.12); color: #5B9FFF; border: 1px solid rgba(45,126,255,0.2); }
+        .sp-progress { background: rgba(255,184,0,0.12);  color: #FFB800; border: 1px solid rgba(255,184,0,0.2); }
+        .sp-alert    { background: rgba(255,69,96,0.12);  color: #FF4560; border: 1px solid rgba(255,69,96,0.2); }
+        .sp-bap      { background: rgba(155,93,229,0.12); color: #9B5DE5; border: 1px solid rgba(155,93,229,0.2); }
+
+        /* ========= FILTER ROW ========= */
         .filter-row {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 10px;
+            margin-bottom: 14px;
         }
         @media (min-width: 768px) {
             .filter-row { flex-direction: row; align-items: center; justify-content: space-between; }
         }
-        .filter-left {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 12px;
-            flex: 1;
-        }
+        .filter-left { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; flex: 1; }
+        .range-filter-label { font-size: 9px; color: var(--text3); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; flex-shrink: 0; }
         .range-filter-group {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-            background: var(--surface2);
-            padding: 4px 10px;
-            border-radius: 30px;
-            border: 1px solid var(--border);
+            display: flex; align-items: center; gap: 4px; flex-wrap: wrap;
         }
         .range-check {
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            font-size: 10px;
+            display: flex; align-items: center; gap: 4px;
+            font-size: 9px;
             cursor: pointer;
-            background: rgba(0,0,0,0.2);
-            padding: 2px 6px;
-            border-radius: 20px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.15s;
+            font-family: 'JetBrains Mono', monospace;
         }
-        .filter-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
+        .range-check:hover { border-color: var(--border3); }
+        .range-check input { display: none; }
+        .range-check.checked { border-color: var(--border3); background: var(--surface3); }
+
+        .filter-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .search-wrap { position: relative; flex: 1; min-width: 180px; }
+        .search-icon {
+            position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+            color: var(--text3); pointer-events: none;
         }
         .search-input {
-            min-width: 180px;
+            width: 100%;
             background: var(--bg2);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 6px 12px 6px 32px;
+            border-radius: 9px;
+            padding: 7px 12px 7px 32px;
             color: var(--text);
             font-size: 11px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%234A5A78' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: 10px center;
+            font-family: 'Sora', sans-serif;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
         }
+        .search-input:focus { border-color: var(--border3); box-shadow: 0 0 0 3px rgba(45,126,255,0.1); }
+        .search-input::placeholder { color: var(--text3); }
+
         .btn-ghost {
             background: var(--surface2);
             border: 1px solid var(--border);
             border-radius: 8px;
-            padding: 5px 12px;
+            padding: 6px 12px;
             cursor: pointer;
             font-size: 10px;
             color: var(--text2);
-        }
-        .filter-count { font-size: 10px; }
-
-        /* ALERT TABEL */
-        .alert-wrap { overflow-x: auto; width: 100%; -webkit-overflow-scrolling: touch; }
-        .alert-tbl {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 11px;
-            min-width: 900px;
-        }
-        .alert-tbl thead th {
-            background: var(--bg2);
-            padding: 10px 8px;
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--text2);
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
+            font-family: 'Sora', sans-serif;
+            transition: all 0.15s;
             white-space: nowrap;
         }
-        .alert-tbl tbody td {
-            padding: 8px 8px;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            color: var(--text2);
-            font-weight: 700;
-            font-size: 10px;
-        }
-        .days-badge { padding: 2px 6px; font-size: 10px; }
-        .row-no { width: 28px; height: 22px; line-height: 22px; font-size: 9px; }
+        .btn-ghost:hover { border-color: var(--border3); color: var(--text); }
 
-        /* WIDGETS GRID */
+        .filter-count {
+            font-size: 10px;
+            color: var(--text3);
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+        }
+
+        /* ========= ALERT TABLE ========= */
+        .alert-wrap {
+            overflow-x: auto;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 10px;
+        }
+        .alert-tbl {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 11px;
+        }
+        /* MOBILE: full width, no min-width */
+        @media (max-width: 767px) {
+            .alert-tbl { min-width: 100%; width: 100%; }
+            /* Hide less important columns on mobile */
+            .col-qty, .col-actual { display: none; }
+        }
+        @media (min-width: 768px) {
+            .alert-tbl { min-width: 860px; }
+        }
+
+        .alert-tbl thead th {
+            background: var(--bg2);
+            padding: 10px 10px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text3);
+            border-bottom: 1px solid var(--border2);
+            cursor: pointer;
+            white-space: nowrap;
+            user-select: none;
+            position: sticky;
+            top: 0;
+        }
+        .alert-tbl thead th:first-child { border-radius: 10px 0 0 0; }
+        .alert-tbl thead th:last-child { border-radius: 0 10px 0 0; }
+        .alert-tbl thead th:hover { color: var(--text2); }
+        .alert-tbl thead th.active-sort { color: var(--accent2); }
+
+        .alert-tbl tbody td {
+            padding: 9px 10px;
+            border-bottom: 1px solid rgba(100,160,255,0.04);
+            color: var(--text2);
+            font-size: 11px;
+            vertical-align: middle;
+        }
+        .alert-tbl tbody tr:hover td { background: rgba(45,126,255,0.04); }
+        .alert-tbl tbody tr.row-critical td { background: rgba(255,69,96,0.04); }
+        .alert-tbl tbody tr.row-critical:hover td { background: rgba(255,69,96,0.08); }
+        .alert-tbl tbody tr:last-child td { border-bottom: none; }
+
+        .num-col { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+        .sort-icon { opacity: 0.5; margin-left: 3px; font-size: 8px; }
+
+        .row-no {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 22px; height: 22px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 9px;
+            color: var(--text3);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .days-badge {
+            display: inline-block;
+            padding: 3px 9px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .days-ok      { background: rgba(0,214,143,0.12); color: #00D68F; }
+        .days-warn    { background: rgba(255,184,0,0.12);  color: #FFB800; }
+        .days-danger  { background: rgba(255,107,53,0.12); color: #FF6B35; }
+        .days-critical{ background: rgba(255,69,96,0.12);  color: #FF4560; }
+
+        /* ========= MOBILE CARD VIEW untuk alert table ========= */
+        @media (max-width: 767px) {
+            .alert-wrap { overflow-x: visible; }
+            .alert-tbl { display: block; }
+            .alert-tbl thead { display: none; }
+            .alert-tbl tbody { display: block; }
+            .alert-tbl tbody tr {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0;
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                margin-bottom: 8px;
+                overflow: hidden;
+                background: var(--surface);
+            }
+            .alert-tbl tbody tr.row-critical { border-color: rgba(255,69,96,0.3); }
+            .alert-tbl tbody td {
+                display: flex;
+                flex-direction: column;
+                padding: 10px 12px;
+                border-bottom: none;
+                border-right: 1px solid var(--border);
+                font-size: 11px;
+            }
+            .alert-tbl tbody td:nth-child(2n) { border-right: none; }
+            .alert-tbl tbody td[data-label]::before {
+                content: attr(data-label);
+                font-size: 8px;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: var(--text3);
+                font-weight: 700;
+                margin-bottom: 3px;
+            }
+            /* Row number: full width top */
+            .alert-tbl tbody td:first-child {
+                grid-column: 1 / -1;
+                background: var(--surface2);
+                flex-direction: row;
+                align-items: center;
+                gap: 8px;
+                padding: 8px 12px;
+                border-bottom: 1px solid var(--border);
+            }
+            /* Days badge: full width bottom */
+            .alert-tbl tbody td:nth-child(8) {
+                grid-column: 1 / -1;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                background: var(--bg2);
+                border-top: 1px solid var(--border);
+            }
+        }
+
+        /* ========= WIDGETS GRID ========= */
         .widgets-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 14px;
+            gap: 16px;
             margin-bottom: 16px;
         }
-        @media (min-width: 768px) {
+        @media (min-width: 640px) {
             .widgets-grid { grid-template-columns: repeat(2, 1fr); }
         }
-        @media (min-width: 1024px) {
+        @media (min-width: 1100px) {
             .widgets-grid { grid-template-columns: repeat(3, 1fr); }
         }
+
         .donut-wrap {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 16px;
         }
-        @media (min-width: 480px) {
+        @media (min-width: 400px) {
             .donut-wrap { flex-direction: row; align-items: center; }
         }
-        .donut-legend { flex: 1; width: 100%; }
-        .donut-leg-item { font-size: 10px; }
-        .bar-name { font-size: 10px; width: 100px; }
-        .peng-name { font-size: 10px; }
-        
-        /* RESPONSIVE UTILITY */
-        @media (max-width: 640px) {
-            .header-right .pill:first-of-type { display: none; }
-            .header-title { font-size: 12px; }
-            .header-sub { display: none; }
-            .upload-zone label span { display: none; }
-            .upload-zone label svg { margin-right: 0; }
-            .upload-zone { padding: 5px 8px; }
-            .btn-primary { padding: 5px 10px; font-size: 10px; }
-            .legend-item { font-size: 9px; }
-            .card-ttl { font-size: 12px; }
-            .pivot-tbl th, .pivot-tbl td { padding: 6px 4px; font-size: 10px; }
+        .donut-legend { flex: 1; min-width: 0; }
+        .donut-leg-item {
+            display: flex; align-items: center; gap: 8px;
+            font-size: 10px; color: var(--text2);
+            padding: 4px 0;
+            border-bottom: 1px solid var(--border);
         }
-        @media (max-width: 480px) {
-            .main { padding: 12px; }
-            .kpi-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-            .kpi-card { padding: 10px 12px; }
-            .kpi-val { font-size: 20px; }
-            .card { padding: 12px; }
+        .donut-leg-item:last-child { border-bottom: none; }
+        .donut-dot { width: 8px; height: 8px; border-radius: 3px; flex-shrink: 0; }
+        .donut-leg-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .donut-pct { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 10px; color: var(--text); flex-shrink: 0; }
+
+        /* Bar list */
+        .bar-list { display: flex; flex-direction: column; gap: 8px; }
+        .bar-item { display: flex; align-items: center; gap: 8px; }
+        .bar-name {
+            font-size: 10px; color: var(--text2);
+            width: 80px; flex-shrink: 0;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .bar-track {
+            flex: 1;
+            background: var(--surface2);
+            border-radius: 4px;
+            height: 6px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .bar-cnt {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; font-weight: 700;
+            color: var(--text);
+            width: 28px; text-align: right; flex-shrink: 0;
         }
 
-        /* ETC */
-        .empty-state { text-align: center; padding: 60px 20px; color: var(--text3); }
-        .footer { text-align: center; padding: 16px; font-size: 10px; color: var(--text3); border-top: 1px solid var(--border); margin-top: 8px; }
+        /* Pengawas list */
+        .peng-list { display: flex; flex-direction: column; gap: 6px; }
+        .peng-item { display: flex; align-items: center; gap: 8px; }
+        .peng-avatar {
+            width: 24px; height: 24px;
+            border-radius: 7px;
+            background: linear-gradient(135deg, var(--surface2), var(--surface3));
+            border: 1px solid var(--border2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 700;
+            color: var(--accent2);
+            flex-shrink: 0;
+        }
+        .peng-name {
+            font-size: 10px; color: var(--text2);
+            flex: 1; min-width: 0;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .peng-track {
+            width: 60px; background: var(--surface2);
+            border-radius: 4px; height: 5px; overflow: hidden;
+            flex-shrink: 0;
+        }
+        .peng-fill { height: 100%; border-radius: 4px; background: var(--accent); }
+        .peng-cnt {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px; font-weight: 700; color: var(--text);
+            width: 22px; text-align: right; flex-shrink: 0;
+        }
+
+        /* ========= LOADING ========= */
         .loading-overlay {
             position: fixed; inset: 0;
-            background: rgba(8,12,20,0.85);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 999;
-            backdrop-filter: blur(4px);
+            background: rgba(6,10,18,0.92);
             display: none;
+            align-items: center; justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(8px);
         }
-        .loading-box { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px 32px; text-align: center; }
-        .spinner { width: 32px; height: 32px; border: 3px solid var(--surface2); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
+        .loading-overlay.active { display: flex; }
+        .loading-box {
+            background: var(--surface);
+            border: 1px solid var(--border2);
+            border-radius: 20px;
+            padding: 32px 40px;
+            text-align: center;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+        }
+        .spinner {
+            width: 36px; height: 36px;
+            border: 3px solid var(--surface3);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+        .loading-text { font-weight: 600; font-size: 13px; color: var(--text2); }
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ========= EMPTY STATE ========= */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text3);
+        }
+        .empty-icon { font-size: 48px; display: block; margin-bottom: 16px; }
+        .empty-title { font-size: 18px; font-weight: 700; color: var(--text2); margin-bottom: 8px; }
+        .empty-sub { font-size: 12px; color: var(--text3); }
+
+        /* ========= FOOTER ========= */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 10px;
+            color: var(--text3);
+            border-top: 1px solid var(--border);
+            margin-top: 8px;
+            letter-spacing: 0.04em;
+        }
+
+        /* ========= RESPONSIVE UTILITY ========= */
+        @media (max-width: 640px) {
+            .header-right .pill:first-of-type { display: none; }
+            .header-title { font-size: 13px; }
+            .header-sub { display: none; }
+            #fileLabel { max-width: 70px; }
+            .main { padding: 12px; }
+            .card { padding: 14px; }
+            .card-badge { display: none; }
+        }
+        @media (max-width: 400px) {
+            .kpi-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* ========= PRINT ========= */
         @media print {
             body { background: #fff; color: #000; }
+            body::before { display: none; }
             header { display: none; }
-            .alert-tbl thead th { background: #eee !important; color: #000 !important; }
+            .card { border: 1px solid #ddd; box-shadow: none; }
+            .alert-tbl thead th { background: #f5f5f5 !important; color: #000 !important; }
+            .alert-tbl tbody td { color: #333 !important; }
         }
+
+        /* Animate in */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .kpi-card { animation: fadeUp 0.4s ease both; }
+        .kpi-card:nth-child(1) { animation-delay: 0.05s; }
+        .kpi-card:nth-child(2) { animation-delay: 0.1s; }
+        .kpi-card:nth-child(3) { animation-delay: 0.15s; }
+        .kpi-card:nth-child(4) { animation-delay: 0.2s; }
+        .kpi-card:nth-child(5) { animation-delay: 0.25s; }
+        .card { animation: fadeUp 0.4s ease both; animation-delay: 0.1s; }
     </style>
 </head>
 <body>
-<div class="loading-overlay" id="loadingOverlay"><div class="loading-box"><div class="spinner"></div><div style="font-weight:600;">Memproses Data...</div></div></div>
+
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box">
+        <div class="spinner"></div>
+        <div class="loading-text">Memproses Data...</div>
+    </div>
+</div>
 
 <header>
     <div class="header-left">
         <div class="logo">DN</div>
-        <div><div class="header-title">DIA – GKM</div><div class="header-sub">Pivot & Alert</div></div>
+        <div class="header-title-group">
+            <div class="header-title">DIA – GKM Dashboard</div>
+            <div class="header-sub">D.NILO · Pivot &amp; Alert Monitor</div>
+        </div>
     </div>
     <div class="header-right">
         <div class="upload-zone">
-            <label for="fileInput"><svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/></svg> <span id="fileLabel">File</span></label>
+            <label for="fileInput">
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/></svg>
+                <span id="fileLabel">Upload File</span>
+            </label>
             <input type="file" id="fileInput" accept=".xlsx,.xls,.csv">
             <button class="btn-primary" id="uploadBtn">Proses</button>
         </div>
         <span class="pill">Riau SMF</span>
-        <span class="pill" id="dateBadge">Belum ada data</span>
+        <span class="pill" id="dateBadge">—</span>
     </div>
 </header>
 
@@ -427,12 +834,19 @@
         </div>
         <span id="statsMeta">Belum ada data</span>
     </div>
-    <div id="dashboardMain"><div class="empty-state"><span class="empty-icon">📊</span><div class="empty-title">Dashboard Siap</div><div class="empty-sub">Upload file Excel DIA GKM untuk menampilkan data pivot dan alert</div></div></div>
+
+    <div id="dashboardMain">
+        <div class="empty-state">
+            <span class="empty-icon">📊</span>
+            <div class="empty-title">Dashboard Siap</div>
+            <div class="empty-sub">Upload file Excel atau data Google Sheets akan dimuat otomatis</div>
+        </div>
+    </div>
 </div>
-<div class="footer">DIA GKM Dashboard · D.NILO · Klik header tabel alert untuk sorting · Filter rentang Active Days tersedia</div>
+
+<div class="footer">DIA GKM Dashboard &nbsp;·&nbsp; D.NILO &nbsp;·&nbsp; Klik header tabel untuk sorting &nbsp;·&nbsp; Filter rentang Active Days tersedia</div>
 
 <script>
-// ===================== SCRIPT SAMA PERSIS SEPERTI VERSI SEBELUMNYA (TIDAK DIUBAH) =====================
 let rawDataRows = [];
 let currentAlertData = [];
 let filteredData = [];
@@ -443,349 +857,432 @@ let currentRangeFilters = [];
 let filterTimeout = null;
 
 const nameMapping = {
-    "ANDI PRASTYA": "ANDI", "FORMAN WILSON PANDIANGAN": "FORMAN", "GUNAWAN GUNAWAN": "DIMAS",
-    "HERRY RIDWANA": "WAHYU", "JAIBI PARNINGOTAN M": "JAIBI", "MANGARAJA LUKAS": "LUKAS",
-    "MAOTAN DORIS SIANTURI": "MAOTAN", "MOCHAMMAD NUR RACHMATULLOH": "RAHMAT", "PETRUS SIAGIAN": "PETRUS",
-    "RAFIQ RAFIQ": "RAFIQ", "SURYA DARMA YUDHA": "YUDHA", "WAHYU TRINANDA": "NANDA",
-    "YUHENDRA ERSA": "HENDRA", "ADE SUCIPTO": "ADE", "ANDREAS WAHYU NUGRAHA": "WAHYU",
-    "ARIPAN YUNAS": "ARIPAN", "DIMAS TRI HERNANDA": "DIMAS", "HELEN SINAGA": "HELEN"
+    "ANDI PRASTYA":"ANDI","FORMAN WILSON PANDIANGAN":"FORMAN","GUNAWAN GUNAWAN":"DIMAS",
+    "HERRY RIDWANA":"WAHYU","JAIBI PARNINGOTAN M":"JAIBI","MANGARAJA LUKAS":"LUKAS",
+    "MAOTAN DORIS SIANTURI":"MAOTAN","MOCHAMMAD NUR RACHMATULLOH":"RAHMAT","PETRUS SIAGIAN":"PETRUS",
+    "RAFIQ RAFIQ":"RAFIQ","SURYA DARMA YUDHA":"YUDHA","WAHYU TRINANDA":"NANDA",
+    "YUHENDRA ERSA":"HENDRA","ADE SUCIPTO":"ADE","ANDREAS WAHYU NUGRAHA":"WAHYU",
+    "ARIPAN YUNAS":"ARIPAN","DIMAS TRI HERNANDA":"DIMAS","HELEN SINAGA":"HELEN"
 };
 const contractorMapping = {
-    "PT BANDANG REZEKI LESTARI": "PT.BRL", "PT DOSMA MARPAUNG CORDON": "PT.DMC", "PT FAYDA ARROZZAAQ BAROKAH": "PT.FAB",
-    "PT GABEDO PELITA SEMESTA": "PT.GPS", "PT PARNA JAYA MANDIRI": "PT.PJM", "PT RIMBA PANCA MAKMUR": "PT.RPM",
-    "PT. APRIMASURI MANDIRI ABADI": "PT.AMA", "PT. DEVRY JAYA SENTOSA": "PT.DJS", "PT. GRACIA PUTRI BARELANG": "PT.GPB",
-    "PT. HARE SOTO MULANA": "PT.HSM", "PT. JOFAN EFAN GIOFAN": "PT.JEG", "PT. SAMUEL DUTA MANDIRI": "PT.SDM",
-    "PT. SOLID AMANAH SAUDARA": "PT.SAS", "WALDA GHAZIA PRATAMA, PT": "PT.WGP"
+    "PT BANDANG REZEKI LESTARI":"PT.BRL","PT DOSMA MARPAUNG CORDON":"PT.DMC","PT FAYDA ARROZZAAQ BAROKAH":"PT.FAB",
+    "PT GABEDO PELITA SEMESTA":"PT.GPS","PT PARNA JAYA MANDIRI":"PT.PJM","PT RIMBA PANCA MAKMUR":"PT.RPM",
+    "PT. APRIMASURI MANDIRI ABADI":"PT.AMA","PT. DEVRY JAYA SENTOSA":"PT.DJS","PT. GRACIA PUTRI BARELANG":"PT.GPB",
+    "PT. HARE SOTO MULANA":"PT.HSM","PT. JOFAN EFAN GIOFAN":"PT.JEG","PT. SAMUEL DUTA MANDIRI":"PT.SDM",
+    "PT. SOLID AMANAH SAUDARA":"PT.SAS","WALDA GHAZIA PRATAMA, PT":"PT.WGP"
 };
-function mapName(name) { if (!name) return "Tidak ada"; return nameMapping[name] || name; }
-function mapContractor(name) { if (!name) return "Unknown"; return contractorMapping[name] || name; }
-function simplifyStatus(s) {
-    if (!s) return 'Unknown';
-    s = s.toString().trim();
-    if (s.includes('BAP Not Released')) return 'BAP Not Released';
-    if (s.includes('Progress Complete')) return 'Progress Complete';
-    if (s.includes('QA Pass')) return 'QA Pass';
-    if (s.includes('SPK On Progress')) return 'SPK On Progress';
-    if (s.includes('UAV Alert')) return 'Alert UAV';
+function mapName(n){if(!n)return"Tidak ada";return nameMapping[n]||n;}
+function mapContractor(n){if(!n)return"Unknown";return contractorMapping[n]||n;}
+function simplifyStatus(s){
+    if(!s)return'Unknown'; s=s.toString().trim();
+    if(s.includes('BAP Not Released'))return'BAP Not Released';
+    if(s.includes('Progress Complete'))return'Progress Complete';
+    if(s.includes('QA Pass'))return'QA Pass';
+    if(s.includes('SPK On Progress'))return'SPK On Progress';
+    if(s.includes('UAV Alert'))return'Alert UAV';
     return s;
 }
-function classifyDays(d) {
-    if (d <= 17) return '0-17';
-    if (d <= 25) return '18-25';
-    if (d <= 30) return '26-30';
-    if (d <= 50) return '31-50';
-    if (d <= 60) return '51-60';
-    if (d <= 80) return '61-80';
-    return '>80';
+function classifyDays(d){
+    if(d<=17)return'0-17'; if(d<=25)return'18-25'; if(d<=30)return'26-30';
+    if(d<=50)return'31-50'; if(d<=60)return'51-60'; if(d<=80)return'61-80'; return'>80';
 }
-const RANGE_ORDER = ['0-17','18-25','26-30','31-50','51-60','61-80','>80'];
-const RANGE_STYLE = { '0-17':{text:'#34D399'}, '18-25':{text:'#FCD34D'}, '26-30':{text:'#FB923C'}, '31-50':{text:'#F87171'}, '51-60':{text:'#F87171'}, '61-80':{text:'#FCA5A5'}, '>80':{text:'#FCA5A5'} };
-function categorizeActivity(t) {
-    if (!t) return 'Lainnya';
-    t = t.toString().toUpperCase();
-    if (t.includes('CHEMICAL WEEDING')) return 'Chemical Weeding';
-    if (t.includes('PD-')||t.includes('NPK')||t.includes('UREA')||t.includes('BORAX')||t.includes('ZINCOP')||t.includes('PUPUK')) return 'Pupuk / Fertilizer';
-    if (t.includes('HAMA')||t.includes('PENYAKIT')||t.includes('HPT')||t.includes('INFUS')) return 'HPT / Pest Control';
-    if (t.includes('TANAM')||t.includes('PLANTING')||t.includes('SULAM')||t.includes('COPPICING')||t.includes('BLANKING')||t.includes('SINGLING')) return 'Tanam / Planting';
-    return 'Lainnya';
+const RANGE_ORDER=['0-17','18-25','26-30','31-50','51-60','61-80','>80'];
+const RANGE_STYLE={'0-17':{text:'#00D68F'},'18-25':{text:'#FFB800'},'26-30':{text:'#FF6B35'},'31-50':{text:'#FF4560'},'51-60':{text:'#FF2D55'},'61-80':{text:'#FF6680'},'>80':{text:'#FF99AA'}};
+function categorizeActivity(t){
+    if(!t)return'Lainnya'; t=t.toString().toUpperCase();
+    if(t.includes('CHEMICAL WEEDING'))return'Chemical Weeding';
+    if(t.includes('PD-')||t.includes('NPK')||t.includes('UREA')||t.includes('BORAX')||t.includes('ZINCOP')||t.includes('PUPUK'))return'Pupuk / Fertilizer';
+    if(t.includes('HAMA')||t.includes('PENYAKIT')||t.includes('HPT')||t.includes('INFUS'))return'HPT / Pest Control';
+    if(t.includes('TANAM')||t.includes('PLANTING')||t.includes('SULAM')||t.includes('COPPICING')||t.includes('BLANKING')||t.includes('SINGLING'))return'Tanam / Planting';
+    return'Lainnya';
 }
-function statusClass(s) {
-    if (s === 'Progress Complete') return 'sp-complete';
-    if (s === 'QA Pass') return 'sp-qa';
-    if (s === 'SPK On Progress') return 'sp-progress';
-    if (s === 'Alert UAV') return 'sp-alert';
-    if (s === 'BAP Not Released') return 'sp-bap';
-    return '';
+function statusClass(s){
+    if(s==='Progress Complete')return'sp-complete';
+    if(s==='QA Pass')return'sp-qa';
+    if(s==='SPK On Progress')return'sp-progress';
+    if(s==='Alert UAV')return'sp-alert';
+    if(s==='BAP Not Released')return'sp-bap';
+    return'';
 }
-function daysClass(d) {
-    if (d <= 17) return 'days-ok';
-    if (d <= 30) return 'days-warn';
-    if (d <= 60) return 'days-danger';
-    return 'days-critical';
+function daysClass(d){
+    if(d<=17)return'days-ok'; if(d<=30)return'days-warn';
+    if(d<=60)return'days-danger'; return'days-critical';
 }
 
-function processData(rows) {
-    rawDataRows = rows.slice();
-    const petakSet = new Set();
-    let totalActiveSum = 0, activeCount = 0;
-    const petakActiveMap = new Map();
-    const spkSet = new Set();
-    const koordPivotMap = new Map();
-    const koordTotalMap = new Map();
-    const koordPengawasMap = new Map();
-    const statusPivotMap = new Map();
-    const actGroupCount = new Map();
-    const actTypeDetail = new Map();
-    const contractorMap = new Map();
-    const pengawasMap = new Map();
+function processData(rows){
+    rawDataRows=rows.slice();
+    const petakSet=new Set(); let totalActiveSum=0,activeCount=0;
+    const petakActiveMap=new Map(); const spkSet=new Set();
+    const koordPivotMap=new Map(); const koordTotalMap=new Map();
+    const koordPengawasMap=new Map(); const statusPivotMap=new Map();
+    const actGroupCount=new Map(); const actTypeDetail=new Map();
+    const contractorMap=new Map(); const pengawasMap=new Map();
 
-    rows.forEach(row => {
-        const petak = row.PetakId ? row.PetakId.toString().trim() : null;
-        if (!petak) return;
-        const activeDays = parseFloat(row['Active Days'] || row['ActiveDays'] || 0);
-        if (isNaN(activeDays)) return;
-        const statusSimp = simplifyStatus(row['Progress Status']?.toString().trim() || 'Unknown');
-        let rawKoord = row['Koordinator']?.toString().trim();
-        let rawPengawas = row['Pengawas']?.toString().trim();
-        let rawContractor = row['Contractor']?.toString().trim();
-        if (!rawKoord) rawKoord = 'Tidak ada';
-        if (!rawPengawas || rawPengawas === '') rawPengawas = 'Tidak ada';
-        if (!rawContractor) rawContractor = 'Unknown';
-        const koord = mapName(rawKoord);
-        const pengawas = mapName(rawPengawas);
-        const contractor = mapContractor(rawContractor);
-        const range = classifyDays(activeDays);
-        const actTypeRaw = row['ActivityType']?.toString().trim() || 'N/A';
-
-        petakSet.add(petak);
-        totalActiveSum += activeDays;
-        activeCount++;
-        if (!petakActiveMap.has(petak) || petakActiveMap.get(petak) < activeDays) petakActiveMap.set(petak, activeDays);
-        if (statusSimp === 'SPK On Progress') spkSet.add(petak);
-
-        if (!statusPivotMap.has(statusSimp)) statusPivotMap.set(statusSimp, new Map());
-        statusPivotMap.get(statusSimp).set(range, (statusPivotMap.get(statusSimp).get(range) || 0) + 1);
-
-        koordTotalMap.set(koord, (koordTotalMap.get(koord) || 0) + 1);
-        if (!koordPivotMap.has(koord)) koordPivotMap.set(koord, new Map());
-        const stMap = koordPivotMap.get(koord);
-        if (!stMap.has(statusSimp)) stMap.set(statusSimp, new Map());
-        stMap.get(statusSimp).set(range, (stMap.get(statusSimp).get(range) || 0) + 1);
-
-        if (!koordPengawasMap.has(koord)) koordPengawasMap.set(koord, new Map());
-        const pm = koordPengawasMap.get(koord);
-        if (!pm.has(pengawas)) pm.set(pengawas, new Map());
-        pm.get(pengawas).set(range, (pm.get(pengawas).get(range) || 0) + 1);
-
-        const group = categorizeActivity(actTypeRaw);
-        actGroupCount.set(group, (actGroupCount.get(group) || 0) + 1);
-        actTypeDetail.set(actTypeRaw, (actTypeDetail.get(actTypeRaw) || 0) + 1);
-        if (!contractorMap.has(contractor)) contractorMap.set(contractor, new Set());
+    rows.forEach(row=>{
+        const petak=row.PetakId?row.PetakId.toString().trim():null; if(!petak)return;
+        const activeDays=parseFloat(row['Active Days']||row['ActiveDays']||0); if(isNaN(activeDays))return;
+        const statusSimp=simplifyStatus(row['Progress Status']?.toString().trim()||'Unknown');
+        let rawKoord=row['Koordinator']?.toString().trim(); let rawPengawas=row['Pengawas']?.toString().trim();
+        let rawContractor=row['Contractor']?.toString().trim();
+        if(!rawKoord)rawKoord='Tidak ada'; if(!rawPengawas||rawPengawas==='')rawPengawas='Tidak ada'; if(!rawContractor)rawContractor='Unknown';
+        const koord=mapName(rawKoord); const pengawas=mapName(rawPengawas); const contractor=mapContractor(rawContractor);
+        const range=classifyDays(activeDays); const actTypeRaw=row['ActivityType']?.toString().trim()||'N/A';
+        petakSet.add(petak); totalActiveSum+=activeDays; activeCount++;
+        if(!petakActiveMap.has(petak)||petakActiveMap.get(petak)<activeDays)petakActiveMap.set(petak,activeDays);
+        if(statusSimp==='SPK On Progress')spkSet.add(petak);
+        if(!statusPivotMap.has(statusSimp))statusPivotMap.set(statusSimp,new Map());
+        statusPivotMap.get(statusSimp).set(range,(statusPivotMap.get(statusSimp).get(range)||0)+1);
+        koordTotalMap.set(koord,(koordTotalMap.get(koord)||0)+1);
+        if(!koordPivotMap.has(koord))koordPivotMap.set(koord,new Map());
+        const stMap=koordPivotMap.get(koord);
+        if(!stMap.has(statusSimp))stMap.set(statusSimp,new Map());
+        stMap.get(statusSimp).set(range,(stMap.get(statusSimp).get(range)||0)+1);
+        if(!koordPengawasMap.has(koord))koordPengawasMap.set(koord,new Map());
+        const pm=koordPengawasMap.get(koord);
+        if(!pm.has(pengawas))pm.set(pengawas,new Map());
+        pm.get(pengawas).set(range,(pm.get(pengawas).get(range)||0)+1);
+        const group=categorizeActivity(actTypeRaw);
+        actGroupCount.set(group,(actGroupCount.get(group)||0)+1);
+        actTypeDetail.set(actTypeRaw,(actTypeDetail.get(actTypeRaw)||0)+1);
+        if(!contractorMap.has(contractor))contractorMap.set(contractor,new Set());
         contractorMap.get(contractor).add(petak);
-        if (!pengawasMap.has(pengawas)) pengawasMap.set(pengawas, new Set());
+        if(!pengawasMap.has(pengawas))pengawasMap.set(pengawas,new Set());
         pengawasMap.get(pengawas).add(petak);
     });
 
-    let petakLebih30 = 0;
-    for (let d of petakActiveMap.values()) if (d > 30) petakLebih30++;
-    const avgActive = activeCount ? (totalActiveSum / activeCount).toFixed(1) : 0;
-    const totalRecs = rows.length;
-    const uniquePetak = petakSet.size;
-
-    const statusOrder = ['BAP Not Released', 'QA Pass', 'Progress Complete', 'SPK On Progress'];
-    const statusRows = [];
-    for (const st of statusOrder) {
-        const rangeMap = statusPivotMap.get(st);
-        let values = new Map();
-        let total = 0;
-        if (rangeMap) {
-            for (const r of RANGE_ORDER) { const cnt = rangeMap.get(r) || 0; values.set(r, cnt); total += cnt; }
-        } else { for (const r of RANGE_ORDER) values.set(r, 0); }
-        statusRows.push({ name: st, total, values });
+    let petakLebih30=0;
+    for(let d of petakActiveMap.values())if(d>30)petakLebih30++;
+    const avgActive=activeCount?(totalActiveSum/activeCount).toFixed(1):0;
+    const totalRecs=rows.length; const uniquePetak=petakSet.size;
+    const statusOrder=['BAP Not Released','QA Pass','Progress Complete','SPK On Progress'];
+    const statusRows=[];
+    for(const st of statusOrder){
+        const rangeMap=statusPivotMap.get(st); let values=new Map(); let total=0;
+        if(rangeMap){for(const r of RANGE_ORDER){const cnt=rangeMap.get(r)||0;values.set(r,cnt);total+=cnt;}}
+        else{for(const r of RANGE_ORDER)values.set(r,0);}
+        statusRows.push({name:st,total,values});
     }
-    const statusGrand = new Map(); let statusGrandTotal = 0;
-    for (const row of statusRows) {
-        for (const r of RANGE_ORDER) statusGrand.set(r, (statusGrand.get(r) || 0) + (row.values.get(r) || 0));
-        statusGrandTotal += row.total;
+    const statusGrand=new Map(); let statusGrandTotal=0;
+    for(const row of statusRows){for(const r of RANGE_ORDER)statusGrand.set(r,(statusGrand.get(r)||0)+(row.values.get(r)||0));statusGrandTotal+=row.total;}
+    const sortedKoords=Array.from(koordPivotMap.keys()).sort((a,b)=>(koordTotalMap.get(b)||0)-(koordTotalMap.get(a)||0));
+    const koordPivotRows=[];
+    for(const koord of sortedKoords){
+        const stMap=koordPivotMap.get(koord); const koordRangeTotals=new Map();
+        for(const r of RANGE_ORDER)koordRangeTotals.set(r,0); let koordTotal=0;
+        for(const status of stMap.keys()){const rm=stMap.get(status);for(const r of RANGE_ORDER){const cnt=rm.get(r)||0;koordRangeTotals.set(r,koordRangeTotals.get(r)+cnt);koordTotal+=cnt;}}
+        koordPivotRows.push({type:'koord',name:koord,total:koordTotal,rangeTotals:koordRangeTotals});
+        const statuses=Array.from(stMap.keys()).sort((a,b)=>{let ia=statusOrder.indexOf(a),ib=statusOrder.indexOf(b);if(ia<0)ia=999;if(ib<0)ib=999;return ia-ib;});
+        for(const status of statuses){const rm=stMap.get(status);let statusTotal=0;const vals=new Map();for(const r of RANGE_ORDER){const c=rm.get(r)||0;vals.set(r,c);statusTotal+=c;}koordPivotRows.push({type:'status',name:status,total:statusTotal,values:vals});}
     }
-
-    const sortedKoords = Array.from(koordPivotMap.keys()).sort((a,b)=>(koordTotalMap.get(b)||0)-(koordTotalMap.get(a)||0));
-    const koordPivotRows = [];
-    for (const koord of sortedKoords) {
-        const stMap = koordPivotMap.get(koord);
-        const koordRangeTotals = new Map();
-        for (const r of RANGE_ORDER) koordRangeTotals.set(r, 0);
-        let koordTotal = 0;
-        for (const status of stMap.keys()) {
-            const rm = stMap.get(status);
-            for (const r of RANGE_ORDER) {
-                const cnt = rm.get(r) || 0;
-                koordRangeTotals.set(r, koordRangeTotals.get(r) + cnt);
-                koordTotal += cnt;
-            }
-        }
-        koordPivotRows.push({ type:'koord', name:koord, total: koordTotal, rangeTotals: koordRangeTotals });
-        const statuses = Array.from(stMap.keys()).sort((a,b)=>{ let ia=statusOrder.indexOf(a), ib=statusOrder.indexOf(b); if(ia<0)ia=999; if(ib<0)ib=999; return ia-ib; });
-        for (const status of statuses) {
-            const rm = stMap.get(status);
-            let statusTotal = 0;
-            const vals = new Map();
-            for (const r of RANGE_ORDER) { const c = rm.get(r) || 0; vals.set(r, c); statusTotal += c; }
-            koordPivotRows.push({ type:'status', name:status, total:statusTotal, values:vals });
-        }
+    const kg1=new Map(); let kt1=0;
+    for(const r of koordPivotRows)if(r.type==='status'&&r.values){for(const rr of RANGE_ORDER)kg1.set(rr,(kg1.get(rr)||0)+(r.values.get(rr)||0));kt1+=r.total;}
+    const koordPengawasRows=[];
+    for(const koord of sortedKoords){
+        const pm=koordPengawasMap.get(koord);
+        if(!pm||pm.size===0){const emptyRange=new Map();for(const r of RANGE_ORDER)emptyRange.set(r,0);koordPengawasRows.push({name:koord,total:0,rangeTotals:emptyRange,children:[]});continue;}
+        let koordTotal=0; const koordRangeTotals=new Map(); for(const r of RANGE_ORDER)koordRangeTotals.set(r,0);
+        const children=[];
+        for(const peng of Array.from(pm.keys()).sort()){const rm=pm.get(peng);let pt=0;const vals=new Map();for(const r of RANGE_ORDER){const c=rm.get(r)||0;vals.set(r,c);pt+=c;koordRangeTotals.set(r,koordRangeTotals.get(r)+c);}koordTotal+=pt;children.push({name:peng,total:pt,values:vals});}
+        koordPengawasRows.push({name:koord,total:koordTotal,rangeTotals:koordRangeTotals,children});
     }
-    const kg1 = new Map(); let kt1=0;
-    for (const r of koordPivotRows) if (r.type==='status' && r.values) { for (const rr of RANGE_ORDER) kg1.set(rr,(kg1.get(rr)||0)+(r.values.get(rr)||0)); kt1 += r.total; }
-
-    const koordPengawasRows = [];
-    for (const koord of sortedKoords) {
-        const pm = koordPengawasMap.get(koord);
-        if (!pm || pm.size === 0) { const emptyRange = new Map(); for (const r of RANGE_ORDER) emptyRange.set(r,0); koordPengawasRows.push({ name: koord, total: 0, rangeTotals: emptyRange, children: [] }); continue; }
-        let koordTotal = 0;
-        const koordRangeTotals = new Map();
-        for (const r of RANGE_ORDER) koordRangeTotals.set(r, 0);
-        const children = [];
-        for (const peng of Array.from(pm.keys()).sort()) {
-            const rm = pm.get(peng);
-            let pt = 0;
-            const vals = new Map();
-            for (const r of RANGE_ORDER) { const c = rm.get(r) || 0; vals.set(r, c); pt += c; koordRangeTotals.set(r, koordRangeTotals.get(r) + c); }
-            koordTotal += pt;
-            children.push({ name: peng, total: pt, values: vals });
-        }
-        koordPengawasRows.push({ name: koord, total: koordTotal, rangeTotals: koordRangeTotals, children });
-    }
-    const kg2 = new Map(); let kt2 = 0;
-    for (const kr of koordPengawasRows) for (const ch of kr.children) for (const r of RANGE_ORDER) { kg2.set(r, (kg2.get(r) || 0) + (ch.values.get(r) || 0)); kt2 += ch.total; }
-
-    const actGroupData = Array.from(actGroupCount.entries()).map(([label,count])=>({label,count})).sort((a,b)=>b.count-a.count);
-    const groupColors = {'Chemical Weeding':'#EF4444','Pupuk / Fertilizer':'#F97316','HPT / Pest Control':'#A78BFA','Tanam / Planting':'#10B981','Lainnya':'#60A5FA'};
-    actGroupData.forEach(g=>{ g.color = groupColors[g.label]||'#8A9BBE'; });
-    const contractorData = Array.from(contractorMap.entries()).map(([name,ps])=>({name,petak:ps.size})).sort((a,b)=>b.petak-a.petak).slice(0,8);
-    const actTypeList = Array.from(actTypeDetail.entries()).map(([label,count])=>({label,count})).sort((a,b)=>b.count-a.count).slice(0,10);
-    const pengawasTop = Array.from(pengawasMap.entries()).map(([name,ps])=>({name,petak:ps.size})).sort((a,b)=>b.petak-a.petak).slice(0,12);
-
-    currentAlertData = rawDataRows.map(row => {
-        let rawKoord = row['Koordinator']?.toString().trim(), rawPeng = row['Pengawas']?.toString().trim(), rawContractor = row['Contractor']?.toString().trim();
-        if (!rawKoord) rawKoord = 'Tidak ada';
-        if (!rawPeng || rawPeng === '') rawPeng = 'Tidak ada';
-        if (!rawContractor) rawContractor = 'Unknown';
-        const activeDaysVal = isNaN(parseFloat(row['Active Days']||row['ActiveDays'])) ? 0 : parseFloat(row['Active Days']||row['ActiveDays']);
-        return {
-            petakId: (row.PetakId||'-').toString().trim(),
-            pengawas: mapName(rawPeng),
-            koordinator: mapName(rawKoord),
-            contractor: mapContractor(rawContractor),
-            activityType: (row['ActivityType']||'-').toString().trim(),
-            progressStatus: simplifyStatus((row['Progress Status']||'').toString().trim()),
-            activeDays: activeDaysVal,
-            qty: isNaN(parseFloat(row['Qty'])) ? 0 : parseFloat(row['Qty']),
-            actualWork: isNaN(parseFloat(row['ActualWork'])) ? 0 : parseFloat(row['ActualWork']),
-            range: classifyDays(activeDaysVal)
-        };
+    const kg2=new Map(); let kt2=0;
+    for(const kr of koordPengawasRows)for(const ch of kr.children)for(const r of RANGE_ORDER){kg2.set(r,(kg2.get(r)||0)+(ch.values.get(r)||0));kt2+=ch.total;}
+    const actGroupData=Array.from(actGroupCount.entries()).map(([label,count])=>({label,count})).sort((a,b)=>b.count-a.count);
+    const groupColors={'Chemical Weeding':'#EF4444','Pupuk / Fertilizer':'#FF6B35','HPT / Pest Control':'#9B5DE5','Tanam / Planting':'#00D68F','Lainnya':'#2D7EFF'};
+    actGroupData.forEach(g=>{g.color=groupColors[g.label]||'#7A9AC8';});
+    const contractorData=Array.from(contractorMap.entries()).map(([name,ps])=>({name,petak:ps.size})).sort((a,b)=>b.petak-a.petak).slice(0,8);
+    const actTypeList=Array.from(actTypeDetail.entries()).map(([label,count])=>({label,count})).sort((a,b)=>b.count-a.count).slice(0,10);
+    const pengawasTop=Array.from(pengawasMap.entries()).map(([name,ps])=>({name,petak:ps.size})).sort((a,b)=>b.petak-a.petak).slice(0,12);
+    currentAlertData=rawDataRows.map(row=>{
+        let rawKoord=row['Koordinator']?.toString().trim(),rawPeng=row['Pengawas']?.toString().trim(),rawContractor=row['Contractor']?.toString().trim();
+        if(!rawKoord)rawKoord='Tidak ada'; if(!rawPeng||rawPeng==='')rawPeng='Tidak ada'; if(!rawContractor)rawContractor='Unknown';
+        const activeDaysVal=isNaN(parseFloat(row['Active Days']||row['ActiveDays']))?0:parseFloat(row['Active Days']||row['ActiveDays']);
+        return{petakId:(row.PetakId||'-').toString().trim(),pengawas:mapName(rawPeng),koordinator:mapName(rawKoord),contractor:mapContractor(rawContractor),activityType:(row['ActivityType']||'-').toString().trim(),progressStatus:simplifyStatus((row['Progress Status']||'').toString().trim()),activeDays:activeDaysVal,qty:isNaN(parseFloat(row['Qty']))?0:parseFloat(row['Qty']),actualWork:isNaN(parseFloat(row['ActualWork']))?0:parseFloat(row['ActualWork']),range:classifyDays(activeDaysVal)};
     });
     currentAlertData.sort((a,b)=>b.activeDays-a.activeDays);
     sortColumn='activeDays'; sortDirection='desc';
     applyFilterAndSort();
-    return { totalRecs, uniquePetak, avgActive, spkOnProgress:spkSet.size, petakLebih30, statusRows, statusGrand, statusGrandTotal, koordPivotRows, kg1, kt1, koordPengawasRows, kg2, kt2, actGroupData, contractorData, actTypeList, pengawasTop };
+    return{totalRecs,uniquePetak,avgActive,spkOnProgress:spkSet.size,petakLebih30,statusRows,statusGrand,statusGrandTotal,koordPivotRows,kg1,kt1,koordPengawasRows,kg2,kt2,actGroupData,contractorData,actTypeList,pengawasTop};
 }
 
-function applyFilterAndSort() {
-    let data = currentAlertData;
-    if (currentFilterText.trim()) { const q = currentFilterText.toLowerCase(); data = data.filter(item => Object.values(item).some(v => v.toString().toLowerCase().includes(q))); }
-    if (currentRangeFilters.length > 0) { data = data.filter(item => currentRangeFilters.includes(item.range)); }
-    data.sort((a,b)=>{ let av = a[sortColumn], bv = b[sortColumn]; if (typeof av === 'string') { av = av.toLowerCase(); bv = bv.toLowerCase(); } if (sortDirection === 'asc') return av > bv ? 1 : av < bv ? -1 : 0; return av < bv ? 1 : av > bv ? -1 : 0; });
-    filteredData = data;
-    updateAlertBody();
+function applyFilterAndSort(){
+    let data=currentAlertData;
+    if(currentFilterText.trim()){const q=currentFilterText.toLowerCase();data=data.filter(item=>Object.values(item).some(v=>v.toString().toLowerCase().includes(q)));}
+    if(currentRangeFilters.length>0){data=data.filter(item=>currentRangeFilters.includes(item.range));}
+    data.sort((a,b)=>{let av=a[sortColumn],bv=b[sortColumn];if(typeof av==='string'){av=av.toLowerCase();bv=bv.toLowerCase();}if(sortDirection==='asc')return av>bv?1:av<bv?-1:0;return av<bv?1:av>bv?-1:0;});
+    filteredData=data; updateAlertBody();
 }
 
-function updateAlertBody() {
-    const tbody = document.getElementById('alertTBody');
-    if (!tbody) return;
-    let html = '';
-    filteredData.forEach((item,i)=>{ const crit = item.activeDays > 60; const sc = statusClass(item.progressStatus); const dc = daysClass(item.activeDays);
-        html += `<tr class="${crit?'row-critical':''}"><td><span class="row-no">${i+1}</span></td><td>${item.petakId}</td><td>${item.pengawas}</td><td>${item.koordinator}</td><td>${item.contractor}</td><td style="max-width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${item.activityType}">${item.activityType}</td><td><span class="status-pill ${sc}">${item.progressStatus}</span></td><td class="num-col"><span class="days-badge ${dc}">${item.activeDays}</span></td><td class="num-col">${item.qty}</td><td class="num-col">${item.actualWork}</td></tr>`;
+function updateAlertBody(){
+    const tbody=document.getElementById('alertTBody'); if(!tbody)return;
+    const isMobile=window.innerWidth<768;
+    let html='';
+    filteredData.forEach((item,i)=>{
+        const crit=item.activeDays>60; const sc=statusClass(item.progressStatus); const dc=daysClass(item.activeDays);
+        if(isMobile){
+            html+=`<tr class="${crit?'row-critical':''}">
+                <td data-label=""><span class="row-no">${i+1}</span> <strong style="font-size:12px;color:var(--text)">${item.petakId}</strong> <span class="status-pill ${sc}" style="margin-left:auto">${item.progressStatus}</span></td>
+                <td data-label="Pengawas">${item.pengawas}</td>
+                <td data-label="Koordinator">${item.koordinator}</td>
+                <td data-label="Kontraktor">${item.contractor}</td>
+                <td data-label="Aktivitas" style="grid-column:1/-1;font-size:10px;color:var(--text3)" title="${item.activityType}">${item.activityType}</td>
+                <td data-label="Active Days" style="grid-column:1/-1"><span style="font-size:10px;color:var(--text3)">Active Days</span><span class="days-badge ${dc}">${item.activeDays} hari</span></td>
+            </tr>`;
+        } else {
+            html+=`<tr class="${crit?'row-critical':''}">
+                <td><span class="row-no">${i+1}</span></td>
+                <td style="font-weight:600;color:var(--text)">${item.petakId}</td>
+                <td>${item.pengawas}</td>
+                <td>${item.koordinator}</td>
+                <td>${item.contractor}</td>
+                <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;color:var(--text3)" title="${item.activityType}">${item.activityType}</td>
+                <td><span class="status-pill ${sc}">${item.progressStatus}</span></td>
+                <td class="num-col"><span class="days-badge ${dc}">${item.activeDays}</span></td>
+                <td class="num-col col-qty">${item.qty}</td>
+                <td class="num-col col-actual">${item.actualWork}</td>
+            </tr>`;
+        }
     });
-    tbody.innerHTML = html || `<tr><td colspan="10" style="text-align:center; padding:32px;">Tidak ada data sesuai filter</td></tr>`;
-    const fc = document.getElementById('filterCount'); if (fc) fc.textContent = `${filteredData.length} / ${currentAlertData.length} baris`;
-    document.querySelectorAll('.alert-tbl thead th').forEach(th=>{ const col = th.dataset.col; const icon = th.querySelector('.sort-icon'); if (col && icon) { if (col === sortColumn) { icon.textContent = sortDirection==='asc'?'▲':'▼'; } else icon.textContent = '⇅'; } });
+    tbody.innerHTML=html||`<tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text3)">Tidak ada data sesuai filter</td></tr>`;
+    const fc=document.getElementById('filterCount');if(fc)fc.textContent=`${filteredData.length} / ${currentAlertData.length} baris`;
+    document.querySelectorAll('.alert-tbl thead th').forEach(th=>{
+        const col=th.dataset.col; const icon=th.querySelector('.sort-icon');
+        th.classList.toggle('active-sort', col===sortColumn);
+        if(col&&icon){if(col===sortColumn){icon.textContent=sortDirection==='asc'?'▲':'▼';}else icon.textContent='⇅';}
+    });
 }
 
-function buildPivotTable(title, icon, iconBg, rows, grandMap, grandTotal, isStatusTable = false, isKoordPengawas = false) {
-    const headers = RANGE_ORDER.map(r=>`<th>${r}</th>`).join('');
-    let bodyHtml = '';
-    if (isStatusTable) {
-        for (const row of rows) {
-            const cells = RANGE_ORDER.map(r=>{ const v = row.values.get(r) || 0; const style = RANGE_STYLE[r]; return v ? `<td class="range-val" style="color:${style.text}">${v}</td>` : `<td></td>`; }).join('');
-            bodyHtml += `<tr class="row-sub"><td><span class="status-pill ${statusClass(row.name)}">${row.name}</span></td>${cells}<td style="font-weight:700;">${row.total}</td></tr>`;
+function buildPivotTable(title,icon,iconBg,rows,grandMap,grandTotal,isStatusTable=false,isKoordPengawas=false){
+    const headers=RANGE_ORDER.map(r=>`<th>${r}</th>`).join('');
+    let bodyHtml='';
+    if(isStatusTable){
+        for(const row of rows){const cells=RANGE_ORDER.map(r=>{const v=row.values.get(r)||0;const style=RANGE_STYLE[r];return v?`<td class="range-val" style="color:${style.text}">${v}</td>`:`<td style="color:var(--text3);opacity:0.3">—</td>`;}).join('');bodyHtml+=`<tr class="row-sub"><td><span class="status-pill ${statusClass(row.name)}">${row.name}</span></td>${cells}<td style="font-weight:700;color:var(--text)">${row.total}</td></tr>`;}
+    }else if(isKoordPengawas){
+        for(const koordRow of rows){
+            const koordCells=RANGE_ORDER.map(r=>{const v=koordRow.rangeTotals.get(r)||0;const style=RANGE_STYLE[r];return v?`<td class="range-val" style="color:${style.text}">${v}</td>`:`<td style="color:var(--text3);opacity:0.3">—</td>`;}).join('');
+            bodyHtml+=`<tr class="row-koord"><td>${koordRow.name}</td>${koordCells}<td style="font-weight:700;color:var(--text)">${koordRow.total}</td></tr>`;
+            for(const child of koordRow.children){const cells=RANGE_ORDER.map(r=>{const v=child.values.get(r)||0;const style=RANGE_STYLE[r];return v?`<td class="range-val" style="color:${style.text}">${v}</td>`:`<td style="color:var(--text3);opacity:0.3">—</td>`;}).join('');bodyHtml+=`<tr class="row-sub"><td>${child.name}</td>${cells}<td style="font-weight:700;color:var(--text)">${child.total}</td></tr>`;}
         }
-    } else if (isKoordPengawas) {
-        for (const koordRow of rows) {
-            const koordCells = RANGE_ORDER.map(r=>{ const v = koordRow.rangeTotals.get(r) || 0; const style = RANGE_STYLE[r]; return v ? `<td class="range-val" style="color:${style.text}">${v}</td>` : `<td></td>`; }).join('');
-            bodyHtml += `<tr class="row-koord"><td>${koordRow.name}</td>${koordCells}<td style="font-weight:700;">${koordRow.total}</td></tr>`;
-            for (const child of koordRow.children) {
-                const cells = RANGE_ORDER.map(r=>{ const v = child.values.get(r) || 0; const style = RANGE_STYLE[r]; return v ? `<td class="range-val" style="color:${style.text}">${v}</td>` : `<td></td>`; }).join('');
-                bodyHtml += `<tr class="row-sub"><td>${child.name}</td>${cells}<td style="font-weight:700;">${child.total}</td></tr>`;
-            }
-        }
-    } else {
-        for (const row of rows) {
-            if (row.type === 'koord') {
-                const cells = RANGE_ORDER.map(r=>{ const v = row.rangeTotals.get(r) || 0; const style = RANGE_STYLE[r]; return v ? `<td class="range-val" style="color:${style.text}">${v}</td>` : `<td></td>`; }).join('');
-                bodyHtml += `<tr class="row-koord"><td>${row.name}</td>${cells}<td style="font-weight:700;">${row.total}</td></tr>`;
-            } else if (row.type === 'status') {
-                const cells = RANGE_ORDER.map(r=>{ const v = row.values.get(r) || 0; const style = RANGE_STYLE[r]; return v ? `<td class="range-val" style="color:${style.text}">${v}</td>` : `<td></td>`; }).join('');
-                bodyHtml += `<tr class="row-sub"><td><span class="status-pill ${statusClass(row.name)}">${row.name}</span></td>${cells}<td style="font-weight:700;">${row.total}</td></tr>`;
-            }
+    }else{
+        for(const row of rows){
+            if(row.type==='koord'){const cells=RANGE_ORDER.map(r=>{const v=row.rangeTotals.get(r)||0;const style=RANGE_STYLE[r];return v?`<td class="range-val" style="color:${style.text}">${v}</td>`:`<td style="color:var(--text3);opacity:0.3">—</td>`;}).join('');bodyHtml+=`<tr class="row-koord"><td>${row.name}</td>${cells}<td style="font-weight:700;color:var(--text)">${row.total}</td></tr>`;}
+            else if(row.type==='status'){const cells=RANGE_ORDER.map(r=>{const v=row.values.get(r)||0;const style=RANGE_STYLE[r];return v?`<td class="range-val" style="color:${style.text}">${v}</td>`:`<td style="color:var(--text3);opacity:0.3">—</td>`;}).join('');bodyHtml+=`<tr class="row-sub"><td><span class="status-pill ${statusClass(row.name)}">${row.name}</span></td>${cells}<td style="font-weight:700;color:var(--text)">${row.total}</td></tr>`;}
         }
     }
-    const grandCells = RANGE_ORDER.map(r=>{ const v = grandMap.get(r) || 0; const style = RANGE_STYLE[r]; return `<td class="range-val" style="color:${style.text}">${v}</td>`; }).join('');
-    bodyHtml += `<tr class="row-grand"><td><strong>Grand Total</strong></td>${grandCells}<td><strong>${grandTotal}</strong></td></tr>`;
-    return `<div class="card"><div class="card-hdr"><div class="card-ttl"><div class="card-ttl-icon" style="background:${iconBg}">${icon}</div>${title}</div><span class="card-badge">Jumlah Record · Warna = Rentang Active Days</span></div><div class="tbl-wrap"><table class="pivot-tbl"><thead><tr><th style="min-width:160px;">Row Labels</th>${headers}<th>Grand Total</th></tr></thead><tbody>${bodyHtml}</tbody></table></div></div>`;
+    const grandCells=RANGE_ORDER.map(r=>{const v=grandMap.get(r)||0;const style=RANGE_STYLE[r];return`<td class="range-val" style="color:${style.text}">${v||'—'}</td>`;}).join('');
+    bodyHtml+=`<tr class="row-grand"><td><strong>Grand Total</strong></td>${grandCells}<td><strong>${grandTotal}</strong></td></tr>`;
+    return`<div class="card"><div class="card-hdr"><div class="card-ttl"><div class="card-ttl-icon" style="background:${iconBg}">${icon}</div>${title}</div><span class="card-badge">Jumlah Record · Warna = Rentang Active Days</span></div><div class="tbl-wrap"><table class="pivot-tbl"><thead><tr><th style="min-width:150px;">Row Labels</th>${headers}<th>Total</th></tr></thead><tbody>${bodyHtml}</tbody></table></div></div>`;
 }
 
-function renderDashboard(data) {
-    const container = document.getElementById('dashboardMain');
-    document.getElementById('statsMeta').innerHTML = `Petak Unik: <strong>${data.uniquePetak}</strong> &nbsp;|&nbsp; Total Record: <strong>${data.totalRecs}</strong>`;
-    document.getElementById('dateBadge').textContent = `📅 ${new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})}`;
-    const kpiHtml = `<div class="kpi-grid"><div class="kpi-card c-blue"><span class="kpi-icon">📋</span><div class="kpi-label">Total Record</div><div class="kpi-val">${data.totalRecs.toLocaleString()}</div><div class="kpi-sub">Semua aktivitas SPK</div></div><div class="kpi-card c-green"><span class="kpi-icon">🌿</span><div class="kpi-label">Unique Petak</div><div class="kpi-val">${data.uniquePetak.toLocaleString()}</div><div class="kpi-sub">Petak berbeda</div></div><div class="kpi-card c-yellow"><span class="kpi-icon">📅</span><div class="kpi-label">Avg Active Days</div><div class="kpi-val">${data.avgActive}</div><div class="kpi-sub">Rata-rata hari</div></div><div class="kpi-card c-orange"><span class="kpi-icon">⚡</span><div class="kpi-label">SPK On Progress</div><div class="kpi-val">${data.spkOnProgress}</div><div class="kpi-sub">Petak berjalan</div></div><div class="kpi-card c-red"><span class="kpi-icon">⚠️</span><div class="kpi-label">Petak &gt; 30 Hari</div><div class="kpi-val">${data.petakLebih30}</div><div class="kpi-sub">Perlu perhatian</div></div></div>`;
-    const statusTable = buildPivotTable('Status × Active Days', '📌', 'rgba(139,92,246,0.15)', data.statusRows, data.statusGrand, data.statusGrandTotal, true, false);
-    const pivot1 = buildPivotTable('Pivot: Koordinator × Status × Active Days', '📊', 'rgba(59,130,246,0.15)', data.koordPivotRows, data.kg1, data.kt1, false, false);
-    const pivot2 = buildPivotTable('Pivot: Koordinator × Pengawas × Active Days', '👥', 'rgba(16,185,129,0.15)', data.koordPengawasRows, data.kg2, data.kt2, false, true);
-    const rangeCheckboxes = RANGE_ORDER.map(r => `<label class="range-check"><input type="checkbox" value="${r}" class="range-cb"> <span style="color:${RANGE_STYLE[r].text}">${r}</span></label>`).join('');
-    const alertHtml = `<div class="card"><div class="card-hdr"><div class="card-ttl"><div class="card-ttl-icon" style="background:rgba(239,68,68,0.15)">⚠️</div>Alert Monitor · Active Days Tertinggi</div><div style="display:flex; gap:8px;"><button class="btn-ghost" id="printBWBtn">🖨️ Print B/W</button><button class="btn-ghost" id="pdfBtn">📄 Export PDF</button></div></div><div class="filter-row"><div class="filter-left"><div class="range-filter-group"><span style="font-size:10px; color:var(--text3);">Rentang:</span>${rangeCheckboxes}</div></div><div class="filter-right"><input type="text" id="alertSearch" class="search-input" placeholder="Cari ..." autocomplete="off"><button id="clearBtn" class="btn-ghost">✕ Clear</button><span class="filter-count" id="filterCount"></span></div></div><div class="alert-wrap"><table class="alert-tbl" id="alertTable"><thead><tr><th style="width:40px;">#</th><th data-col="petakId">Petak ID <span class="sort-icon">⇅</span></th><th data-col="pengawas">Pengawas <span class="sort-icon">⇅</span></th><th data-col="koordinator">Koordinator <span class="sort-icon">⇅</span></th><th data-col="contractor">Contractor <span class="sort-icon">⇅</span></th><th data-col="activityType">Activity Type <span class="sort-icon">⇅</span></th><th data-col="progressStatus">Progress Status <span class="sort-icon">⇅</span></th><th data-col="activeDays">Active Days <span class="sort-icon">▼</span></th><th data-col="qty">Qty <span class="sort-icon">⇅</span></th><th data-col="actualWork">Actual Work <span class="sort-icon">⇅</span></th></tr></thead><tbody id="alertTBody"></tbody></table></div></div>`;
-    const totalActs = data.actGroupData.reduce((s,d)=>s+d.count,0);
-    const actColors = ['#EF4444','#F97316','#A78BFA','#10B981','#60A5FA'];
-    let contRows = data.contractorData.map(c=>{ const pct=Math.round(c.petak/(data.contractorData[0]?.petak||1)*100); return `<div class="bar-item"><div class="bar-name" title="${c.name}">${c.name}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%; background:var(--accent);"></div></div><div class="bar-cnt">${c.petak}</div></div>`; }).join('');
-    let actRows = data.actTypeList.map((a,i)=>{ const pct=Math.round(a.count/(data.actTypeList[0]?.count||1)*100); const lbl=a.label.length>26?a.label.slice(0,23)+'…':a.label; return `<div class="bar-item"><div class="bar-name" title="${a.label}">${lbl}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%; background:${actColors[i%5]};"></div></div><div class="bar-cnt">${a.count}</div></div>`; }).join('');
-    let pengRows = data.pengawasTop.map(p=>{ const pct=Math.round(p.petak/(data.pengawasTop[0]?.petak||1)*100); return `<div class="peng-item"><div class="peng-avatar">${p.name.charAt(0)}</div><div class="peng-name" title="${p.name}">${p.name}</div><div class="peng-track"><div class="peng-fill" style="width:${pct}%"></div></div><div class="peng-cnt">${p.petak}</div></div>`; }).join('');
-    const widgetsHtml = `<div class="widgets-grid"><div class="card"><div class="card-hdr"><div class="card-ttl"><div class="card-ttl-icon" style="background:rgba(167,139,250,0.15)">🍩</div>Kelompok Aktivitas</div></div><div class="donut-wrap"><svg id="donutSvg" viewBox="0 0 120 120" width="100" height="100"></svg><div class="donut-legend" id="donutLegend"></div></div></div><div class="card"><div class="card-hdr"><div class="card-ttl"><div class="card-ttl-icon" style="background:rgba(59,130,246,0.15)">🏢</div>Top Kontraktor</div></div><div class="bar-list">${contRows}</div></div><div class="card"><div class="card-hdr"><div class="card-ttl"><div class="card-ttl-icon" style="background:rgba(249,115,22,0.15)">📌</div>Top Aktivitas</div></div><div class="bar-list">${actRows}</div></div></div><div class="card"><div class="card-hdr"><div class="card-ttl"><div class="card-ttl-icon" style="background:rgba(16,185,129,0.15)">👁️</div>Top Pengawas (Unik Petak)</div></div><div class="peng-list">${pengRows}</div></div>`;
-    container.innerHTML = kpiHtml + statusTable + pivot1 + pivot2 + alertHtml + widgetsHtml;
+function renderDashboard(data){
+    const container=document.getElementById('dashboardMain');
+    document.getElementById('statsMeta').innerHTML=`Petak Unik: <strong>${data.uniquePetak}</strong> &nbsp;|&nbsp; Total Record: <strong>${data.totalRecs}</strong>`;
+    document.getElementById('dateBadge').textContent=`📅 ${new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})}`;
+
+    const kpiHtml=`<div class="kpi-grid">
+        <div class="kpi-card c-blue"><span class="kpi-icon">📋</span><div class="kpi-label">Total Record</div><div class="kpi-val">${data.totalRecs.toLocaleString()}</div><div class="kpi-sub">Semua aktivitas SPK</div></div>
+        <div class="kpi-card c-green"><span class="kpi-icon">🌿</span><div class="kpi-label">Unique Petak</div><div class="kpi-val">${data.uniquePetak.toLocaleString()}</div><div class="kpi-sub">Petak berbeda</div></div>
+        <div class="kpi-card c-yellow"><span class="kpi-icon">📅</span><div class="kpi-label">Avg Active Days</div><div class="kpi-val">${data.avgActive}</div><div class="kpi-sub">Rata-rata hari aktif</div></div>
+        <div class="kpi-card c-orange"><span class="kpi-icon">⚡</span><div class="kpi-label">SPK On Progress</div><div class="kpi-val">${data.spkOnProgress}</div><div class="kpi-sub">Petak berjalan</div></div>
+        <div class="kpi-card c-red"><span class="kpi-icon">⚠️</span><div class="kpi-label">Petak &gt; 30 Hari</div><div class="kpi-val">${data.petakLebih30}</div><div class="kpi-sub">Perlu perhatian</div></div>
+    </div>`;
+
+    const statusTable=buildPivotTable('Status × Active Days','📌','rgba(155,93,229,0.15)',data.statusRows,data.statusGrand,data.statusGrandTotal,true,false);
+    const pivot1=buildPivotTable('Koordinator × Status × Active Days','📊','rgba(45,126,255,0.15)',data.koordPivotRows,data.kg1,data.kt1,false,false);
+    const pivot2=buildPivotTable('Koordinator × Pengawas × Active Days','👥','rgba(0,214,143,0.15)',data.koordPengawasRows,data.kg2,data.kt2,false,true);
+
+    const rangeCheckboxes=RANGE_ORDER.map(r=>`<label class="range-check" data-range="${r}"><input type="checkbox" value="${r}" class="range-cb"> <span style="color:${RANGE_STYLE[r].text}">${r}</span></label>`).join('');
+
+    const alertHtml=`<div class="card">
+        <div class="card-hdr">
+            <div class="card-ttl"><div class="card-ttl-icon" style="background:rgba(255,69,96,0.15)">⚠️</div>Alert Monitor · Active Days Tertinggi</div>
+            <div class="card-hdr-actions">
+                <button class="btn-ghost" id="printBWBtn">🖨️ Print</button>
+                <button class="btn-ghost" id="pdfBtn">📄 Export PDF</button>
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="filter-left">
+                <span class="range-filter-label">Rentang</span>
+                <div class="range-filter-group">${rangeCheckboxes}</div>
+            </div>
+            <div class="filter-right">
+                <div class="search-wrap">
+                    <svg class="search-icon" width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z"/></svg>
+                    <input type="text" id="alertSearch" class="search-input" placeholder="Cari petak, pengawas, dll..." autocomplete="off">
+                </div>
+                <button id="clearBtn" class="btn-ghost">✕ Reset</button>
+                <span class="filter-count" id="filterCount"></span>
+            </div>
+        </div>
+        <div class="alert-wrap">
+            <table class="alert-tbl" id="alertTable">
+                <thead><tr>
+                    <th style="width:38px;">#</th>
+                    <th data-col="petakId">Petak ID <span class="sort-icon">⇅</span></th>
+                    <th data-col="pengawas">Pengawas <span class="sort-icon">⇅</span></th>
+                    <th data-col="koordinator">Koordinator <span class="sort-icon">⇅</span></th>
+                    <th data-col="contractor">Contractor <span class="sort-icon">⇅</span></th>
+                    <th data-col="activityType">Activity Type <span class="sort-icon">⇅</span></th>
+                    <th data-col="progressStatus">Status <span class="sort-icon">⇅</span></th>
+                    <th data-col="activeDays">Active Days <span class="sort-icon">▼</span></th>
+                    <th data-col="qty" class="col-qty">Qty <span class="sort-icon">⇅</span></th>
+                    <th data-col="actualWork" class="col-actual">Actual Work <span class="sort-icon">⇅</span></th>
+                </tr></thead>
+                <tbody id="alertTBody"></tbody>
+            </table>
+        </div>
+    </div>`;
+
+    const actColors=['#EF4444','#FF6B35','#9B5DE5','#00D68F','#2D7EFF'];
+    let contRows=data.contractorData.map(c=>{const pct=Math.round(c.petak/(data.contractorData[0]?.petak||1)*100);return`<div class="bar-item"><div class="bar-name" title="${c.name}">${c.name}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:var(--accent)"></div></div><div class="bar-cnt">${c.petak}</div></div>`;}).join('');
+    let actRows=data.actTypeList.map((a,i)=>{const pct=Math.round(a.count/(data.actTypeList[0]?.count||1)*100);const lbl=a.label.length>24?a.label.slice(0,21)+'…':a.label;return`<div class="bar-item"><div class="bar-name" title="${a.label}">${lbl}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${actColors[i%5]}"></div></div><div class="bar-cnt">${a.count}</div></div>`;}).join('');
+    let pengRows=data.pengawasTop.map(p=>{const pct=Math.round(p.petak/(data.pengawasTop[0]?.petak||1)*100);return`<div class="peng-item"><div class="peng-avatar">${p.name.charAt(0)}</div><div class="peng-name" title="${p.name}">${p.name}</div><div class="peng-track"><div class="peng-fill" style="width:${pct}%"></div></div><div class="peng-cnt">${p.petak}</div></div>`;}).join('');
+
+    const widgetsHtml=`<div class="widgets-grid">
+        <div class="card"><div class="card-hdr"><div class="card-ttl"><div class="card-ttl-icon" style="background:rgba(155,93,229,0.15)">🍩</div>Kelompok Aktivitas</div></div><div class="donut-wrap"><svg id="donutSvg" viewBox="0 0 120 120" width="110" height="110"></svg><div class="donut-legend" id="donutLegend"></div></div></div>
+        <div class="card"><div class="card-hdr"><div class="card-ttl"><div class="card-ttl-icon" style="background:rgba(45,126,255,0.15)">🏢</div>Top Kontraktor</div></div><div class="bar-list">${contRows}</div></div>
+        <div class="card"><div class="card-hdr"><div class="card-ttl"><div class="card-ttl-icon" style="background:rgba(255,107,53,0.15)">📌</div>Top Aktivitas</div></div><div class="bar-list">${actRows}</div></div>
+    </div>
+    <div class="card"><div class="card-hdr"><div class="card-ttl"><div class="card-ttl-icon" style="background:rgba(0,214,143,0.15)">👁️</div>Top Pengawas (Unik Petak)</div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;">${pengRows}</div></div>`;
+
+    container.innerHTML=kpiHtml+statusTable+pivot1+pivot2+alertHtml+widgetsHtml;
     updateAlertBody();
     bindEvents();
+
+    // Donut chart
     (function(){
-        const svg = document.getElementById('donutSvg'); if (!svg) return;
-        const total = data.actGroupData.reduce((s,d)=>s+d.count,0);
-        const cx=60,cy=60,r=46,inner=30; let angle = -Math.PI/2;
-        svg.innerHTML = '';
-        data.actGroupData.forEach(d=>{ const sweep = (d.count/total)*2*Math.PI; const x1=cx+r*Math.cos(angle), y1=cy+r*Math.sin(angle); const x2=cx+r*Math.cos(angle+sweep), y2=cy+r*Math.sin(angle+sweep); const xi1=cx+inner*Math.cos(angle), yi1=cy+inner*Math.sin(angle); const xi2=cx+inner*Math.cos(angle+sweep), yi2=cy+inner*Math.sin(angle+sweep); const large = sweep > Math.PI ? 1 : 0; const path = document.createElementNS('http://www.w3.org/2000/svg','path'); path.setAttribute('d',`M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} L ${xi2} ${yi2} A ${inner} ${inner} 0 ${large} 0 ${xi1} ${yi1} Z`); path.setAttribute('fill', d.color); path.setAttribute('stroke','#111827'); path.setAttribute('stroke-width','2'); svg.appendChild(path); angle += sweep; });
-        const t1 = document.createElementNS('http://www.w3.org/2000/svg','text'); t1.setAttribute('x',cx); t1.setAttribute('y',cy-2); t1.setAttribute('text-anchor','middle'); t1.setAttribute('fill','#F0F4FF'); t1.setAttribute('font-size','14'); t1.setAttribute('font-weight','700'); t1.textContent = total; svg.appendChild(t1);
-        const t2 = document.createElementNS('http://www.w3.org/2000/svg','text'); t2.setAttribute('x',cx); t2.setAttribute('y',cy+12); t2.setAttribute('text-anchor','middle'); t2.setAttribute('fill','#4A5A78'); t2.setAttribute('font-size','8'); t2.textContent = 'Records'; svg.appendChild(t2);
-        const legDiv = document.getElementById('donutLegend'); if (legDiv) legDiv.innerHTML = data.actGroupData.map(d=>{ const pct=Math.round(d.count/total*100); return `<div class="donut-leg-item"><div class="donut-dot" style="background:${d.color}"></div><span>${d.label}</span><span class="donut-pct">${pct}%</span></div>`; }).join('');
+        const svg=document.getElementById('donutSvg'); if(!svg)return;
+        const total=data.actGroupData.reduce((s,d)=>s+d.count,0);
+        const cx=60,cy=60,r=48,inner=32; let angle=-Math.PI/2;
+        svg.innerHTML='';
+        data.actGroupData.forEach(d=>{
+            const sweep=(d.count/total)*2*Math.PI;
+            const x1=cx+r*Math.cos(angle),y1=cy+r*Math.sin(angle);
+            const x2=cx+r*Math.cos(angle+sweep),y2=cy+r*Math.sin(angle+sweep);
+            const xi1=cx+inner*Math.cos(angle),yi1=cy+inner*Math.sin(angle);
+            const xi2=cx+inner*Math.cos(angle+sweep),yi2=cy+inner*Math.sin(angle+sweep);
+            const large=sweep>Math.PI?1:0;
+            const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+            path.setAttribute('d',`M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} L ${xi2} ${yi2} A ${inner} ${inner} 0 ${large} 0 ${xi1} ${yi1} Z`);
+            path.setAttribute('fill',d.color); path.setAttribute('stroke','#0E1826'); path.setAttribute('stroke-width','2');
+            svg.appendChild(path); angle+=sweep;
+        });
+        const t1=document.createElementNS('http://www.w3.org/2000/svg','text');
+        t1.setAttribute('x',cx);t1.setAttribute('y',cy-2);t1.setAttribute('text-anchor','middle');
+        t1.setAttribute('fill','#E8F0FF');t1.setAttribute('font-size','14');t1.setAttribute('font-weight','700');t1.textContent=total;svg.appendChild(t1);
+        const t2=document.createElementNS('http://www.w3.org/2000/svg','text');
+        t2.setAttribute('x',cx);t2.setAttribute('y',cy+12);t2.setAttribute('text-anchor','middle');
+        t2.setAttribute('fill','#3A5070');t2.setAttribute('font-size','7');t2.textContent='Records';svg.appendChild(t2);
+        const legDiv=document.getElementById('donutLegend');
+        if(legDiv)legDiv.innerHTML=data.actGroupData.map(d=>{const pct=Math.round(d.count/total*100);return`<div class="donut-leg-item"><div class="donut-dot" style="background:${d.color}"></div><span class="donut-leg-label">${d.label}</span><span class="donut-pct">${pct}%</span></div>`;}).join('');
     })();
 }
 
-function bindEvents() {
-    const searchInput = document.getElementById('alertSearch');
-    const clearBtn = document.getElementById('clearBtn');
-    const printBWBtn = document.getElementById('printBWBtn');
-    const pdfBtn = document.getElementById('pdfBtn');
-    const rangeCbs = document.querySelectorAll('.range-cb');
-    if (searchInput) { searchInput.value = currentFilterText; searchInput.addEventListener('input', e=>{ if (filterTimeout) clearTimeout(filterTimeout); filterTimeout = setTimeout(()=>{ currentFilterText = e.target.value; applyFilterAndSort(); }, 250); }); }
-    if (clearBtn) { clearBtn.addEventListener('click',()=>{ if (searchInput) searchInput.value = ''; currentFilterText = ''; rangeCbs.forEach(cb => { cb.checked = false; }); currentRangeFilters = []; applyFilterAndSort(); }); }
-    if (rangeCbs.length) { const handleRangeChange = () => { currentRangeFilters = Array.from(rangeCbs).filter(cb => cb.checked).map(cb => cb.value); applyFilterAndSort(); }; rangeCbs.forEach(cb => cb.addEventListener('change', handleRangeChange)); }
-    document.querySelectorAll('.alert-tbl thead th[data-col]').forEach(th=>{ th.addEventListener('click',()=>{ const col = th.dataset.col; if (!col) return; if (sortColumn === col) sortDirection = sortDirection==='asc'?'desc':'asc'; else { sortColumn = col; sortDirection = 'asc'; } applyFilterAndSort(); }); });
-    if (printBWBtn) { printBWBtn.addEventListener('click',()=>{ const tbl = document.getElementById('alertTable'); const win = window.open('','_blank'); win.document.write(`<html><head><title>Alert – B/W</title><style>body{font-family:Arial;margin:20px;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #000;padding:5px;}th{background:#ddd;}</style></head><body><h3>DIA GKM – Alert Table</h3><p>Total: ${filteredData.length} | Filter: "${currentFilterText}" | Rentang: ${currentRangeFilters.join(', ') || 'semua'}</p>${tbl.cloneNode(true).outerHTML}</body></html>`); win.document.close(); win.print(); win.close(); }); }
-    if (pdfBtn) { pdfBtn.addEventListener('click',()=>{ const tbl = document.getElementById('alertTable'); const win = window.open('','_blank'); win.document.write(`<html><head><title>Alert – PDF Warna</title><style>body{font-family:Arial;margin:20px;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #aaa;padding:5px;}th{background:#e0e7ff;}.row-critical td{background:#fee2e2!important;}</style></head><body><h3>DIA GKM – Alert Table (Warna)</h3><p>Total: ${filteredData.length} | Filter: "${currentFilterText}" | Rentang: ${currentRangeFilters.join(', ') || 'semua'}</p>${tbl.cloneNode(true).outerHTML}</body></html>`); win.document.close(); win.print(); win.close(); }); }
+function bindEvents(){
+    const searchInput=document.getElementById('alertSearch');
+    const clearBtn=document.getElementById('clearBtn');
+    const printBWBtn=document.getElementById('printBWBtn');
+    const pdfBtn=document.getElementById('pdfBtn');
+    const rangeCbs=document.querySelectorAll('.range-cb');
+
+    if(searchInput){
+        searchInput.value=currentFilterText;
+        searchInput.addEventListener('input',e=>{
+            if(filterTimeout)clearTimeout(filterTimeout);
+            filterTimeout=setTimeout(()=>{currentFilterText=e.target.value;applyFilterAndSort();},250);
+        });
+    }
+    if(clearBtn){
+        clearBtn.addEventListener('click',()=>{
+            if(searchInput)searchInput.value='';
+            currentFilterText=''; rangeCbs.forEach(cb=>{cb.checked=false;});
+            document.querySelectorAll('.range-check').forEach(l=>l.classList.remove('checked'));
+            currentRangeFilters=[]; applyFilterAndSort();
+        });
+    }
+    if(rangeCbs.length){
+        const handleRangeChange=()=>{
+            currentRangeFilters=Array.from(rangeCbs).filter(cb=>cb.checked).map(cb=>cb.value);
+            document.querySelectorAll('.range-check').forEach(l=>{l.classList.toggle('checked',l.querySelector('input')?.checked);});
+            applyFilterAndSort();
+        };
+        rangeCbs.forEach(cb=>cb.addEventListener('change',handleRangeChange));
+    }
+    document.querySelectorAll('.alert-tbl thead th[data-col]').forEach(th=>{
+        th.addEventListener('click',()=>{
+            const col=th.dataset.col; if(!col)return;
+            if(sortColumn===col)sortDirection=sortDirection==='asc'?'desc':'asc';
+            else{sortColumn=col;sortDirection='asc';}
+            applyFilterAndSort();
+        });
+    });
+    if(printBWBtn){printBWBtn.addEventListener('click',()=>{const tbl=document.getElementById('alertTable');const win=window.open('','_blank');win.document.write(`<html><head><title>Alert – Print</title><style>body{font-family:Arial;margin:20px;font-size:11px;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #ccc;padding:6px 8px;}th{background:#f0f0f0;font-weight:700;}</style></head><body><h3 style="margin-bottom:12px">DIA GKM – Alert Table</h3><p style="margin-bottom:8px;font-size:10px">Total: ${filteredData.length} baris | Filter: "${currentFilterText||'—'}" | Rentang: ${currentRangeFilters.join(', ')||'semua'}</p>${tbl.cloneNode(true).outerHTML}</body></html>`);win.document.close();win.print();win.close();});}
+    if(pdfBtn){pdfBtn.addEventListener('click',()=>{const tbl=document.getElementById('alertTable');const win=window.open('','_blank');win.document.write(`<html><head><title>Alert – PDF</title><style>body{font-family:Arial;margin:20px;font-size:11px;}table{border-collapse:collapse;width:100%;}th,td{border:1px solid #bbb;padding:6px 8px;}th{background:#e8edff;font-weight:700;}.row-critical td{background:#fff0f0;}</style></head><body><h3 style="margin-bottom:12px">DIA GKM – Alert Table (Warna)</h3><p style="margin-bottom:8px;font-size:10px">Total: ${filteredData.length} baris | Filter: "${currentFilterText||'—'}" | Rentang: ${currentRangeFilters.join(', ')||'semua'}</p>${tbl.cloneNode(true).outerHTML}</body></html>`);win.document.close();win.print();win.close();});}
+
+    // Listen resize for mobile re-render
+    let resizeTimer;
+    window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(filteredData.length)updateAlertBody();},300);});
+
+    // File upload
+    const fileInput=document.getElementById('fileInput');
+    const uploadBtn=document.getElementById('uploadBtn');
+    const fileLabel=document.getElementById('fileLabel');
+    if(fileInput){
+        fileInput.addEventListener('change',()=>{
+            if(fileInput.files.length>0)fileLabel.textContent=fileInput.files[0].name;
+        });
+    }
+    if(uploadBtn){
+        uploadBtn.addEventListener('click',()=>{
+            if(!fileInput||!fileInput.files.length){alert('Pilih file terlebih dahulu');return;}
+            const file=fileInput.files[0];
+            const overlay=document.getElementById('loadingOverlay'); if(overlay)overlay.classList.add('active');
+            const reader=new FileReader();
+            reader.onload=e=>{
+                try{
+                    const data=new Uint8Array(e.target.result);
+                    const wb=XLSX.read(data,{type:'array'});
+                    const ws=wb.Sheets[wb.SheetNames[0]];
+                    const rows=XLSX.utils.sheet_to_json(ws);
+                    if(!rows.length){alert('File kosong');if(overlay)overlay.classList.remove('active');return;}
+                    const dashData=processData(rows);
+                    renderDashboard(dashData);
+                }catch(err){alert('Gagal memproses file: '+err.message);console.error(err);}
+                finally{if(overlay)overlay.classList.remove('active');}
+            };
+            reader.readAsArrayBuffer(file);
+        });
+    }
 }
 
-const googleSheetCSVUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT3NZ1mL2dC4WYkyZKnlILADuXWEj6u42OqJoHItaRiwpseA_6GO-qQaASI7bIq7n2SpuTM7peZls7u/pub?gid=0&single=true&output=csv";
-async function loadDataFromGoogleSheets() {
-    const overlay = document.getElementById('loadingOverlay'); if (overlay) overlay.style.display = 'flex';
-    try {
-        const response = await fetch(googleSheetCSVUrl);
-        if (!response.ok) throw new Error("Gagal mengambil data dari Google Sheets");
-        const arrayBuffer = await response.arrayBuffer();
-        const data = new Uint8Array(arrayBuffer);
-        const wb = XLSX.read(data, {type: 'array'});
-        const ws = wb.Sheets[wb.SheetNames[0]];
-        const rows = XLSX.utils.sheet_to_json(ws);
-        if (!rows.length) { alert('Data dari Google Sheets kosong'); if(overlay) overlay.style.display = 'none'; return; }
-        const dashData = processData(rows);
+const googleSheetCSVUrl="https://docs.google.com/spreadsheets/d/e/2PACX-1vT3NZ1mL2dC4WYkyZKnlILADuXWEj6u42OqJoHItaRiwpseA_6GO-qQaASI7bIq7n2SpuTM7peZls7u/pub?gid=0&single=true&output=csv";
+async function loadDataFromGoogleSheets(){
+    const overlay=document.getElementById('loadingOverlay'); if(overlay)overlay.classList.add('active');
+    try{
+        const response=await fetch(googleSheetCSVUrl);
+        if(!response.ok)throw new Error("Gagal mengambil data dari Google Sheets");
+        const arrayBuffer=await response.arrayBuffer();
+        const data=new Uint8Array(arrayBuffer);
+        const wb=XLSX.read(data,{type:'array'});
+        const ws=wb.Sheets[wb.SheetNames[0]];
+        const rows=XLSX.utils.sheet_to_json(ws);
+        if(!rows.length){alert('Data dari Google Sheets kosong');if(overlay)overlay.classList.remove('active');return;}
+        const dashData=processData(rows);
         renderDashboard(dashData);
-    } catch (err) { alert('Gagal memproses data: ' + err.message); console.error(err); } finally { if (overlay) overlay.style.display = 'none'; }
+    }catch(err){
+        console.warn('Google Sheets gagal, mode manual:',err.message);
+        // Setup upload handlers even if auto-load fails
+        const fileInput=document.getElementById('fileInput');
+        const uploadBtn=document.getElementById('uploadBtn');
+        const fileLabel=document.getElementById('fileLabel');
+        if(fileInput){fileInput.addEventListener('change',()=>{if(fileInput.files.length>0)fileLabel.textContent=fileInput.files[0].name;});}
+        if(uploadBtn){uploadBtn.addEventListener('click',()=>{if(!fileInput||!fileInput.files.length){alert('Pilih file terlebih dahulu');return;}const file=fileInput.files[0];const ov=document.getElementById('loadingOverlay');if(ov)ov.classList.add('active');const reader=new FileReader();reader.onload=e=>{try{const data=new Uint8Array(e.target.result);const wb=XLSX.read(data,{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];const rows=XLSX.utils.sheet_to_json(ws);if(!rows.length){alert('File kosong');if(ov)ov.classList.remove('active');return;}const dashData=processData(rows);renderDashboard(dashData);}catch(err){alert('Gagal: '+err.message);}finally{if(ov)ov.classList.remove('active');};};reader.readAsArrayBuffer(file);});}
+    }finally{if(overlay)overlay.classList.remove('active');}
 }
-document.addEventListener("DOMContentLoaded", () => { loadDataFromGoogleSheets(); });
+
+document.addEventListener("DOMContentLoaded",()=>{loadDataFromGoogleSheets();});
 </script>
 </body>
 </html>
