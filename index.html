@@ -8,35 +8,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg:       #060A12;
-            --bg2:      #0A1020;
-            --surface:  #0E1826;
-            --surface2: #14223A;
-            --surface3: #1A2E4A;
-            --border:   rgba(100,160,255,0.08);
-            --border2:  rgba(100,160,255,0.16);
-            --border3:  rgba(100,160,255,0.28);
-            --text:     #E8F0FF;
-            --text2:    #7A9AC8;
-            --text3:    #3A5070;
-            --accent:   #2D7EFF;
-            --accent2:  #5B9FFF;
-            --accent3:  #A8C8FF;
-            --green:    #00D68F;
-            --yellow:   #FFB800;
-            --orange:   #FF6B35;
-            --red:      #FF4560;
-            --purple:   #9B5DE5;
-            --teal:     #00C9C8;
-            --glow-blue: rgba(45,126,255,0.15);
-            --glow-green: rgba(0,214,143,0.12);
-            --r0: #00D68F; --r0bg: rgba(0,214,143,0.12);
-            --r1: #FFB800; --r1bg: rgba(255,184,0,0.12);
-            --r2: #FF6B35; --r2bg: rgba(255,107,53,0.12);
-            --r3: #FF4560; --r3bg: rgba(255,69,96,0.12);
-            --r4: #FF2D55; --r4bg: rgba(255,45,85,0.15);
-            --r5: #FF6680; --r5bg: rgba(255,102,128,0.15);
-            --r6: #FF99AA; --r6bg: rgba(255,153,170,0.18);
+            --bg:       #F4F6FA;
+            --bg2:      #EAECF4;
+            --surface:  #FFFFFF;
+            --surface2: #F0F2F8;
+            --surface3: #E2E6F0;
+            --border:   rgba(30,60,120,0.08);
+            --border2:  rgba(30,60,120,0.14);
+            --border3:  rgba(30,60,120,0.28);
+            --text:     #111827;
+            --text2:    #374151;
+            --text3:    #9CA3AF;
+            --accent:   #2563EB;
+            --accent2:  #1D4ED8;
+            --accent3:  #3B82F6;
+            --green:    #059669;
+            --yellow:   #D97706;
+            --orange:   #EA580C;
+            --red:      #DC2626;
+            --purple:   #7C3AED;
+            --teal:     #0D9488;
+            --glow-blue: rgba(37,99,235,0.08);
+            --glow-green: rgba(5,150,105,0.08);
+            --r0: #059669; --r0bg: rgba(5,150,105,0.1);
+            --r1: #D97706; --r1bg: rgba(217,119,6,0.1);
+            --r2: #EA580C; --r2bg: rgba(234,88,12,0.1);
+            --r3: #DC2626; --r3bg: rgba(220,38,38,0.1);
+            --r4: #B91C1C; --r4bg: rgba(185,28,28,0.12);
+            --r5: #991B1B; --r5bg: rgba(153,27,27,0.12);
+            --r6: #7F1D1D; --r6bg: rgba(127,29,29,0.14);
         }
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
@@ -56,8 +56,8 @@
             position: fixed;
             inset: 0;
             background-image:
-                linear-gradient(rgba(45,126,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(45,126,255,0.03) 1px, transparent 1px);
+                linear-gradient(rgba(30,60,120,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30,60,120,0.04) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
             z-index: 0;
@@ -66,11 +66,11 @@
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--border3); }
+        ::-webkit-scrollbar-thumb:hover { background: #CBD5E1; }
 
         /* ========= HEADER ========= */
         header {
-            background: rgba(10,16,32,0.96);
+            background: rgba(255,255,255,0.96);
             border-bottom: 1px solid var(--border2);
             padding: 0 20px;
             height: auto;
@@ -393,11 +393,11 @@
             text-transform: uppercase;
             white-space: nowrap;
         }
-        .sp-complete { background: rgba(0,214,143,0.12); color: #00D68F; border: 1px solid rgba(0,214,143,0.2); }
-        .sp-qa       { background: rgba(45,126,255,0.12); color: #5B9FFF; border: 1px solid rgba(45,126,255,0.2); }
-        .sp-progress { background: rgba(255,184,0,0.12);  color: #FFB800; border: 1px solid rgba(255,184,0,0.2); }
-        .sp-alert    { background: rgba(255,69,96,0.12);  color: #FF4560; border: 1px solid rgba(255,69,96,0.2); }
-        .sp-bap      { background: rgba(155,93,229,0.12); color: #9B5DE5; border: 1px solid rgba(155,93,229,0.2); }
+        .sp-complete { background: rgba(5,150,105,0.1);  color: #065F46; border: 1px solid rgba(5,150,105,0.25); }
+        .sp-qa       { background: rgba(37,99,235,0.1);  color: #1E3A8A; border: 1px solid rgba(37,99,235,0.25); }
+        .sp-progress { background: rgba(217,119,6,0.1);  color: #92400E; border: 1px solid rgba(217,119,6,0.25); }
+        .sp-alert    { background: rgba(220,38,38,0.1);  color: #7F1D1D; border: 1px solid rgba(220,38,38,0.25); }
+        .sp-bap      { background: rgba(124,58,237,0.1); color: #4C1D95; border: 1px solid rgba(124,58,237,0.25); }
 
         /* ========= FILTER ROW ========= */
         .filter-row {
@@ -508,6 +508,7 @@
             user-select: none;
             position: sticky;
             top: 0;
+            text-align: center;
         }
         .alert-tbl thead th:first-child { border-radius: 10px 0 0 0; }
         .alert-tbl thead th:last-child { border-radius: 0 10px 0 0; }
@@ -518,6 +519,7 @@
             padding: 9px 10px;
             border-bottom: 1px solid rgba(100,160,255,0.04);
             color: var(--text2);
+            text-align: center;
             font-size: 11px;
             vertical-align: middle;
         }
@@ -526,7 +528,7 @@
         .alert-tbl tbody tr.row-critical:hover td { background: rgba(255,69,96,0.08); }
         .alert-tbl tbody tr:last-child td { border-bottom: none; }
 
-        .num-col { text-align: right; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+        .num-col { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
         .sort-icon { opacity: 0.5; margin-left: 3px; font-size: 8px; }
 
         .row-no {
@@ -908,6 +910,19 @@ function daysClass(d){
     if(d<=17)return'days-ok'; if(d<=30)return'days-warn';
     if(d<=60)return'days-danger'; return'days-critical';
 }
+function activityColor(t){
+    const cat=categorizeActivity(t);
+    if(cat==='Chemical Weeding') return{bg:'rgba(239,68,68,0.1)',color:'#EF4444',border:'rgba(239,68,68,0.25)'};
+    if(cat==='Pupuk / Fertilizer') return{bg:'rgba(255,107,53,0.1)',color:'#FF6B35',border:'rgba(255,107,53,0.25)'};
+    if(cat==='HPT / Pest Control') return{bg:'rgba(155,93,229,0.1)',color:'#9B5DE5',border:'rgba(155,93,229,0.25)'};
+    if(cat==='Tanam / Planting') return{bg:'rgba(0,214,143,0.1)',color:'#00D68F',border:'rgba(0,214,143,0.25)'};
+    return{bg:'rgba(45,126,255,0.1)',color:'#5B9FFF',border:'rgba(45,126,255,0.25)'};
+}
+function activityBadge(t){
+    const c=activityColor(t);
+    const label=t.length>28?t.slice(0,25)+'…':t;
+    return`<span title="${t}" style="display:inline-block;padding:3px 8px;border-radius:6px;font-size:9px;font-weight:600;letter-spacing:0.02em;background:${c.bg};color:${c.color};border:1px solid ${c.border};max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle">${label}</span>`;
+}
 
 function processData(rows){
     rawDataRows=rows.slice();
@@ -1025,7 +1040,7 @@ function updateAlertBody(){
                 <td data-label="Pengawas">${item.pengawas}</td>
                 <td data-label="Koordinator">${item.koordinator}</td>
                 <td data-label="Kontraktor">${item.contractor}</td>
-                <td data-label="Aktivitas" style="grid-column:1/-1;font-size:10px;color:var(--text3)" title="${item.activityType}">${item.activityType}</td>
+                <td data-label="Aktivitas" style="grid-column:1/-1;font-size:10px;color:var(--text3)" title="${item.activityType}">${activityBadge(item.activityType)}</td>
                 <td data-label="Active Days" style="grid-column:1/-1"><span style="font-size:10px;color:var(--text3)">Active Days</span><span class="days-badge ${dc}">${item.activeDays} hari</span></td>
             </tr>`;
         } else {
@@ -1035,7 +1050,7 @@ function updateAlertBody(){
                 <td>${item.pengawas}</td>
                 <td>${item.koordinator}</td>
                 <td>${item.contractor}</td>
-                <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;color:var(--text3)" title="${item.activityType}">${item.activityType}</td>
+                <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;color:var(--text3)" title="${item.activityType}">${activityBadge(item.activityType)}</td>
                 <td><span class="status-pill ${sc}">${item.progressStatus}</span></td>
                 <td class="num-col"><span class="days-badge ${dc}">${item.activeDays}</span></td>
                 <td class="num-col col-qty">${item.qty}</td>
