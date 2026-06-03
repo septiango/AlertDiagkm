@@ -1001,7 +1001,7 @@ function processData(rows){
         koordPengawasRows.push({name:koord,total:koordTotal,rangeTotals:koordRangeTotals,children});
     }
     const kg2=new Map(); let kt2=0;
-    for(const kr of koordPengawasRows)for(const ch of kr.children)for(const r of RANGE_ORDER){kg2.set(r,(kg2.get(r)||0)+(ch.values.get(r)||0));kt2+=ch.total;}
+    for(const kr of koordPengawasRows)for(const ch of kr.children){kt2+=ch.total;for(const r of RANGE_ORDER)kg2.set(r,(kg2.get(r)||0)+(ch.values.get(r)||0));}
     const actGroupData=Array.from(actGroupCount.entries()).map(([label,count])=>({label,count})).sort((a,b)=>b.count-a.count);
     const groupColors={'Chemical Weeding':'#EF4444','Pupuk / Fertilizer':'#FF6B35','HPT / Pest Control':'#9B5DE5','Tanam / Planting':'#00D68F','Lainnya':'#2D7EFF'};
     actGroupData.forEach(g=>{g.color=groupColors[g.label]||'#7A9AC8';});
